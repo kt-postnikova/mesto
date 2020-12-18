@@ -1,0 +1,11 @@
+.profile__add-button {
+    border: 2px solid #fff;
+}
+
+@media screen and (min-width: 1280px) {
+    .profile__add-button {
+        position: absolute;
+        right: 0;
+
+    }
+}
