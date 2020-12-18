@@ -1,0 +1,11 @@
+.profile__button {
+    padding: 0;
+    border: none;
+    background-color: none;
+}
+
+@media screen and (min-width: 1280px) {
+    .profile__button {
+        
+    }
+}
