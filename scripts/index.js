@@ -40,7 +40,7 @@ function addProfileInfo(evt) {
 saveInfoBtn.addEventListener('click', addProfileInfo);
 
 
-let formElement = document.querySelector('.popup__form')
+let formElement = document.querySelector('.popup__form');
 
 function handleFormSubmit (evt) {
     evt.preventDefault(); 
@@ -69,8 +69,8 @@ function clickLikeBtn(index) {
 }
 
 for (let i = 0; i < likeBtn.length; i++) {
-    let likeElement = likeBtn[i]
+    let likeElement = likeBtn[i];
     likeElement.addEventListener('click', function() {
-        clickLikeBtn(i)
+        clickLikeBtn(i);
     })
 }
