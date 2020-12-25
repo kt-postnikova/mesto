@@ -5,10 +5,8 @@
     width: 150px;
     height: 50px;
     padding: 0;
-    position: absolute;
-    right: 0;
-    bottom: 30%;
     cursor: pointer;
+    align-self: center;
 }
 
 @media screen and (max-width: 978px) {
