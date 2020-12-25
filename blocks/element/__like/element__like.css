@@ -9,12 +9,14 @@
     margin: 0;
     padding: 0;
     padding-left: 20px;
+    cursor: pointer;
 }
 
 .element__like:hover {
     opacity: 0.5;
 }
 
-.element__like:active {
+.element__like:focus {
     background-image: url('../../../images/like-active.svg');
+    opacity: unset;
 }
