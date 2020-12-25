@@ -8,71 +8,62 @@
     <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
-        <div class="popup">
-            <div class="popup__container">
-                <button class="popup__close"><img src="./images/close-Icon.svg" alt="Закрыть"></button>
-                <h2 class="popup__header">Редактирование профиля</h2>
-              <form class="popup__form">
-                <input class="popup__input popup__input_type_name" type="text">
-                <input class="popup__input popup__input_type_job" type="text">
-                <button class="popup__button" type="submit">Сохранить</button>
-              </form>
-            </div>
-          </div>
         <header class="header page__header">
             <img class="header__logo" src="./images/logo.svg" alt="Логотип Место">
         </header>
         <main class="content page__content">
             <section class="profile content__profile">
-                <img class="profile__avatar" src="./images/avatar.png" alt="Аватар пользователя">
-                <div class="profile__info">
-                    <h2 class="profile__name">Жак-Ив Кусто</h2>
-                    <button class="profile__button"><img class="profile__button" src="./images/edit-button.svg" alt="Редактировать профиль"></button>
-                    <p class="profile__job">Исследователь океана</p>
+                <div class="profile__block">
+                    <img class="profile__avatar" src="./images/avatar.png" alt="Аватар пользователя">
+                    <div class="profile__info">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <button class="profile__button" type="button" aria-label="Редактировать профиль"></button>
+                        <p class="profile__job">Исследователь океана</p>
+                    </div>
                 </div>
-                <button class="profile__add-button"><img src="./images/add-button.svg" alt="Создать"></button>
+                <button class="profile__add-button"><img src="./images/add-button.svg" alt="Создать" class="profile__add-button-img"></button>
             </section>
             <section class="elements content__elements">
                 <div class="element">
-                    <img class="element__image" src="./images/element1.png" alt="Карачаево-Черкесия: церковь в горах">
+                    <img class="element__image" src="./images/element1.jpg" alt="Карачаево-Черкесия: церковь в горах">
                     <div class="element__block">
-                        <p class="element__title">Карачаево-Черкесия</p>
-                        <img class="element__like" src="./images/like.svg" alt="Нравится">
+                        <h2 class="element__title">Карачаево-Черкесия</h2>
+                        <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="element__image" src="./images/element2.png" alt="Гора Эльбрус">
+                    <img class="element__image" src="./images/element2.jpg" alt="Гора Эльбрус">
                     <div class="element__block">
-                        <p class="element__title">Гора Эльбрус</p>
-                        <img class="element__like" src="./images/like.svg" alt="Нравится">
+                        <h2 class="element__title">Гора Эльбрус</h2>
+                        <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="element__image" src="./images/element3.png" alt="Домбай: гора и лес">
+                    <img class="element__image" src="./images/element3.jpg" alt="Домбай: гора и лес">
                     <div class="element__block">
-                        <p class="element__title">Домбай</p>
-                        <img class="element__like" src="./images/like.svg" alt="Нравится">
+                        <h2 class="element__title">Домбай</h2>
+                        <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="element__image" src="./images/element1.png" alt="Карачаево-Черкесия: церковь в горах">
+                    <img class="element__image" src="./images/element1.jpg" alt="Карачаево-Черкесия: церковь в горах">
                     <div class="element__block">
-                        <p class="element__title">Карачаево-Черкесия</p>
-                        <img class="element__like" src="./images/like.svg" alt="Нравится">
+                        <h2 class="element__title">Карачаево-Черкесия</h2>
+                        <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="element__image" src="./images/element2.png" alt="Гора Эльбрус">
+                    <img class="element__image" src="./images/element2.jpg" alt="Гора Эльбрус">
                     <div class="element__block">
-                        <p class="element__title">Гора Эльбрус</p>
-                        <img class="element__like" src="./images/like.svg" alt="Нравится">
+                        <h2 class="element__title">Гора Эльбрус</h2>
+                        <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="element__image" src="./images/element3.png" alt="Домбай: гора и лес">
+                    <img class="element__image" src="./images/element3.jpg" alt="Домбай: гора и лес">
                     <div class="element__block">
-                        <p class="element__title">Домбай</p>
-                        <img class="element__like" src="./images/like.svg" alt="Нравится">
+                        <h2 class="element__title">Домбай</h2>
+                        <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
                 </div>
             </section>
@@ -80,6 +71,17 @@
         <footer class="footer page__footer">
             <p class="footer__text">&copy; 2020 Mesto Russia</p>
         </footer>
+        <div class="popup">
+            <div class="popup__container">
+                <button class="popup__close" type="button" aria-label="Закрыть"></button>
+                <h2 class="popup__header">Редактирование профиля</h2>
+              <form class="popup__form" name="#popup__form">
+                <input class="popup__input popup__input_type_name" type="text">
+                <input class="popup__input popup__input_type_job" type="text">
+                <button class="popup__button" type="submit">Сохранить</button>
+              </form>
+            </div>
+          </div>
         <script src="./scripts/index.js"></script>
     </body>
 </html>
