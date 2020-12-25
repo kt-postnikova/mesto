@@ -2,8 +2,8 @@
     margin: 0;
     font-size: 18px;
     line-height: 22px;
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
 }
 

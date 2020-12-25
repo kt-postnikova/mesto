@@ -4,8 +4,8 @@
     font-weight: 500;
     margin: 0;
     align-self: end;
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
 }
 
