@@ -11,7 +11,7 @@
     padding-left: 20px;
 }
 
-.element__like:hover:active {
+.element__like:hover {
     opacity: 0.5;
 }
 
