@@ -1,6 +1,5 @@
 let container = document.querySelector('.page');
 let popup = container.querySelector('.popup');
-let saveBtn = container.querySelector('.popup__button')
 let editButton = container.querySelector('.profile__button');
 let popupCloseBtn = container.querySelector('.popup__close');
 let popupForm = container.querySelector('.popup__form');
@@ -33,4 +32,4 @@ function addProfileInfo(evt) {
 
 editButton.addEventListener('click', openEditBtn);
 popupCloseBtn.addEventListener('click', closeEditBtn);
-saveBtn.addEventListener('click', addProfileInfo);
+popupForm.addEventListener('submit', addProfileInfo);
