@@ -71,7 +71,48 @@ function addPlace() {
 }
 addPlaceBtn.addEventListener('click', addPlace);
 
+let createBtn = document.querySelector('.popup__button_type_add-place');
+let createForm = document.querySelector('.popup__form_type_add-place')
+
+function createPlace(evt) {
+  evt.preventDefault();
+
+  const inputTitle = document.querySelector('.popup__input_type_title');
+  const inputLink = document.querySelector('.popup__input_type_link');
+
+  initialCards.unshift({name: inputTitle.value, link: inputLink.value});
+
+  cleanupCards()
+  renderCards()
+  closeAddPlace()
+}
+createForm.addEventListener('submit', createPlace)
+
 function closeAddPlace() {
   popupAddPlace.classList.remove('popup_opened');
 }
+
 closeAddPlaceBtn.addEventListener('click', closeAddPlace);
+
+function renderCards() {
+  initialCards.forEach(data => {
+    const elementTemplate = document.querySelector('#template-element').content;
+    const elementsContainer = document.querySelector('.elements');
+    
+    const element = elementTemplate.cloneNode(true);
+    
+    element.querySelector('.element__image').src = data.link;
+    element.querySelector('.element__title').textContent = data.name;
+    
+    elementsContainer.append(element);
+  });
+}
+
+function cleanupCards() {
+  const cardElements = document.querySelectorAll('.element')
+  cardElements.forEach(element => {
+    element.remove();
+  })
+}
+
+renderCards()

@@ -24,7 +24,7 @@
                 <button class="profile__add-button"><img src="./images/add-button.svg" alt="Создать" class="profile__add-button-img"></button>
             </section>
             <section class="elements content__elements">
-                <div class="element">
+                <!-- <div class="element">
                     <img class="element__image" src="./images/element1.jpg" alt="Карачаево-Черкесия: церковь в горах">
                     <div class="element__block">
                         <h2 class="element__title">Карачаево-Черкесия</h2>
@@ -65,7 +65,19 @@
                         <h2 class="element__title">Домбай</h2>
                         <button class="element__like" type="button" aria-label="Нравится"></button>
                     </div>
-                </div>
+                </div> -->
+
+                <template id='template-element'>
+                    <div class="element">
+                        <img class="element__image">
+                        <div class="element__block">
+                            <h2 class="element__title"></h2>
+                            <button class="element__like" type="button" aria-label="Нравится"></button>
+                        </div>
+                    </div>
+                </template>
+
+
             </section>
         </main>
         <footer class="footer page__footer">
@@ -86,10 +98,10 @@
             <div class="popup__container">
                 <button class="popup__close popup__close_type_add-place" type="button" aria-label="Закрыть"></button>
                 <h2 class="popup__header">Новое место</h2>
-                <form class="popup__form" name="#popup__form">
+                <form class="popup__form popup__form_type_add-place" name="#popup__form">
                     <input class="popup__input popup__input_type_title" type="text" placeholder="Название">
                     <input class="popup__input popup__input_type_link" type="text" placeholder="Ссылка на картинку">
-                    <button class="popup__button" type="submit">Создать</button>
+                    <button class="popup__button popup__button_type_add-place" type="submit">Создать</button>
                 </form>
             </div>
         </div>
