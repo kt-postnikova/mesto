@@ -61,3 +61,17 @@ function addProfileInfo(evt) {
 editButton.addEventListener('click', openEditBtn);
 popupCloseBtn.addEventListener('click', closeEditBtn);
 popupForm.addEventListener('submit', addProfileInfo);
+
+let addPlaceBtn = container.querySelector('.profile__add-button');
+let popupAddPlace = container.querySelector('.popup_type_add-place');
+let closeAddPlaceBtn = container.querySelector('.popup__close_type_add-place');
+
+function addPlace() {
+  popupAddPlace.classList.add('popup_opened');
+}
+addPlaceBtn.addEventListener('click', addPlace);
+
+function closeAddPlace() {
+  popupAddPlace.classList.remove('popup_opened');
+}
+closeAddPlaceBtn.addEventListener('click', closeAddPlace);
