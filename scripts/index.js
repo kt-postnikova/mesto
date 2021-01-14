@@ -8,6 +8,12 @@ let profileJob = container.querySelector('.profile__job');
 let inputName = container.querySelector('.popup__input_type_name');
 let inputJob = container.querySelector('.popup__input_type_job');
 
+let addPlaceBtn = container.querySelector('.profile__add-button');
+let popupAddPlace = container.querySelector('.popup_type_add-place');
+let closeAddPlaceBtn = container.querySelector('.popup__close_type_add-place');
+let createBtn = document.querySelector('.popup__button_type_add-place');
+let createForm = document.querySelector('.popup__form_type_add-place');
+
 
 const initialCards = [
     {
@@ -36,18 +42,20 @@ const initialCards = [
     }
   ];
 
-
-function openEditBtn() {
+// Открывает попап редактирования профиля; в инпутах - значения со страницы
+function openEditPopup() {
     inputName.value = profileName.innerText;
     inputJob.value = profileJob.innerText;
 
     popup.classList.add('popup_opened');
 }
 
-function closeEditBtn() {
+// Закрывает попап редактирования профиля (клик на "крестик")
+function closeEditPopup() {
     popup.classList.remove('popup_opened');
 }
 
+// Выставляет значения инпутов из попапа на страницу
 function addProfileInfo(evt) {
     evt.preventDefault();
 
@@ -57,43 +65,38 @@ function addProfileInfo(evt) {
     closeEditBtn()
 }
 
-
-editButton.addEventListener('click', openEditBtn);
-popupCloseBtn.addEventListener('click', closeEditBtn);
-popupForm.addEventListener('submit', addProfileInfo);
-
-let addPlaceBtn = container.querySelector('.profile__add-button');
-let popupAddPlace = container.querySelector('.popup_type_add-place');
-let closeAddPlaceBtn = container.querySelector('.popup__close_type_add-place');
-
-function addPlace() {
+// Открывает попап создания нового места
+function openPlacePopup() {
   popupAddPlace.classList.add('popup_opened');
 }
-addPlaceBtn.addEventListener('click', addPlace);
 
-let createBtn = document.querySelector('.popup__button_type_add-place');
-let createForm = document.querySelector('.popup__form_type_add-place')
+// Закрывает попап создания нового места (клик на "крестик")
+function closePlacePopup() {
+  popupAddPlace.classList.remove('popup_opened');
+}
 
+// Создание новой карточки места; берет значения из инпутов попапа и создает новый
+// объект в массиве initialCards
 function createPlace(evt) {
   evt.preventDefault();
 
   const inputTitle = document.querySelector('.popup__input_type_title');
   const inputLink = document.querySelector('.popup__input_type_link');
 
-  initialCards.unshift({name: inputTitle.value, link: inputLink.value});
+  const newCard = {
+    name: inputTitle.value, 
+    link: inputLink.value
+  };
 
-  cleanupCards()
-  renderCards()
-  closeAddPlace()
+  initialCards.unshift(newCard);
+  // удаляет уже созданные элементы со страницы, 
+  // чтобы заменить их массивом с новым элементом
+  cleanupCards() 
+  renderCards() // создает темплейты объектов из массива
+  closePlacePopup()
 }
-createForm.addEventListener('submit', createPlace)
 
-function closeAddPlace() {
-  popupAddPlace.classList.remove('popup_opened');
-}
-
-closeAddPlaceBtn.addEventListener('click', closeAddPlace);
-
+// Создает темплейты объектов из массива
 function renderCards() {
   initialCards.forEach(data => {
     const elementTemplate = document.querySelector('#template-element').content;
@@ -108,6 +111,7 @@ function renderCards() {
   });
 }
 
+// Удаляет уже созданные элементы со страницы
 function cleanupCards() {
   const cardElements = document.querySelectorAll('.element')
   cardElements.forEach(element => {
@@ -115,4 +119,12 @@ function cleanupCards() {
   })
 }
 
+editButton.addEventListener('click', openEditPopup);
+popupCloseBtn.addEventListener('click', closeEditPopup);
+popupForm.addEventListener('submit', addProfileInfo);
+addPlaceBtn.addEventListener('click', openPlacePopup);
+createForm.addEventListener('submit', createPlace)
+closeAddPlaceBtn.addEventListener('click', closePlacePopup);
+
 renderCards()
+
