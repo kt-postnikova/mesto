@@ -1,18 +1,17 @@
-let container = document.querySelector('.page');
-let popup = container.querySelector('.popup');
-let editButton = container.querySelector('.profile__button');
-let popupCloseBtn = container.querySelector('.popup__close');
-let popupForm = container.querySelector('.popup__form');
-let profileName = container.querySelector('.profile__name');
-let profileJob = container.querySelector('.profile__job');
-let inputName = container.querySelector('.popup__input_type_name');
-let inputJob = container.querySelector('.popup__input_type_job');
-
-let addPlaceBtn = container.querySelector('.profile__add-button');
-let popupAddPlace = container.querySelector('.popup_type_add-place');
-let closeAddPlaceBtn = container.querySelector('.popup__close_type_add-place');
-let createBtn = document.querySelector('.popup__button_type_add-place');
-let createForm = document.querySelector('.popup__form_type_add-place');
+const container = document.querySelector('.page');
+const profileName = container.querySelector('.profile__name');
+const profileJob = container.querySelector('.profile__job');
+const editButton = container.querySelector('.profile__button');
+const addPlaceBtn = container.querySelector('.profile__add-button');
+const popupAddPlace = container.querySelector('.popup_type_add-place');
+const popup = container.querySelector('.popup');
+const popupCloseBtn = popup.querySelector('.popup__close');
+const popupForm = popup.querySelector('.popup__form');
+const inputName = popup.querySelector('.popup__input_type_name');
+const inputJob = popup.querySelector('.popup__input_type_job');
+const closeAddPlaceBtn = popupAddPlace.querySelector('.popup__close_type_add-place');
+const createBtn = popupAddPlace.querySelector('.popup__button_type_add-place');
+const createForm = popupAddPlace.querySelector('.popup__form_type_add-place');
 
 
 const initialCards = [
@@ -62,7 +61,7 @@ function addProfileInfo(evt) {
     profileName.textContent = inputName.value;
     profileJob.textContent = inputJob.value;
 
-    closeEditBtn()
+    closeEditPopup()
 }
 
 // Открывает попап создания нового места
@@ -110,6 +109,7 @@ function renderCards() {
     elementsContainer.append(element);
   });
 }
+renderCards()
 
 // Удаляет уже созданные элементы со страницы
 function cleanupCards() {
@@ -119,20 +119,12 @@ function cleanupCards() {
   })
 }
 
-editButton.addEventListener('click', openEditPopup);
-popupCloseBtn.addEventListener('click', closeEditPopup);
-popupForm.addEventListener('submit', addProfileInfo);
-addPlaceBtn.addEventListener('click', openPlacePopup);
-createForm.addEventListener('submit', createPlace)
-closeAddPlaceBtn.addEventListener('click', closePlacePopup);
 
-renderCards()
-
+// Проставление лайков
 const likeBtn = document.querySelectorAll('.element__like');
-
 likeBtn.forEach(function(item) {
   item.addEventListener('click', function (event) {
-    let elementTagetList = event.target.classList;
+    const elementTagetList = event.target.classList;
     const likeElement = 'element__like_active'
     if (elementTagetList.contains(likeElement)) {
       elementTagetList.remove(likeElement)
@@ -142,3 +134,22 @@ likeBtn.forEach(function(item) {
   });
 })
 
+// Удаление по клику на иконку
+const trashBtn = document.querySelectorAll('.element__trash-btn');
+function removeCardEvent() {
+  trashBtn.forEach(function(item) {
+    item.addEventListener('click', function () {
+      initialCards.shift()
+      cleanupCards()
+      renderCards()
+    })
+  });
+};
+removeCardEvent()
+
+editButton.addEventListener('click', openEditPopup);
+popupCloseBtn.addEventListener('click', closeEditPopup);
+popupForm.addEventListener('submit', addProfileInfo);
+addPlaceBtn.addEventListener('click', openPlacePopup);
+createForm.addEventListener('submit', createPlace)
+closeAddPlaceBtn.addEventListener('click', closePlacePopup);
