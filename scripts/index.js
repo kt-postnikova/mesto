@@ -128,3 +128,17 @@ closeAddPlaceBtn.addEventListener('click', closePlacePopup);
 
 renderCards()
 
+const likeBtn = document.querySelectorAll('.element__like');
+
+likeBtn.forEach(function(item) {
+  item.addEventListener('click', function (event) {
+    let elementTagetList = event.target.classList;
+    const likeElement = 'element__like_active'
+    if (elementTagetList.contains(likeElement)) {
+      elementTagetList.remove(likeElement)
+    } else {
+      elementTagetList.add('element__like_active');
+    }
+  });
+})
+
