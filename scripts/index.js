@@ -74,53 +74,52 @@ function closePlacePopup() {
   popupAddPlace.classList.remove('popup_opened');
 }
 
-// Создание новой карточки места; берет значения из инпутов попапа и создает новый
-// объект в массиве initialCards
-function createPlace(evt) {
-  evt.preventDefault();
 
-  const inputTitle = document.querySelector('.popup__input_type_title');
-  const inputLink = document.querySelector('.popup__input_type_link');
 
-  const newCard = {
-    name: inputTitle.value, 
-    link: inputLink.value
-  };
 
-  initialCards.unshift(newCard);
-  // удаляет уже созданные элементы со страницы, 
-  // чтобы заменить их массивом с новым элементом
-  cleanupCards() 
-  renderCards() // создает темплейты объектов из массива
-  closePlacePopup()
+
+const cardTemplate = document.querySelector('#template-element').content;
+const elementsContainer = document.querySelector('.elements');
+    
+function createNewCard(name, link) {
+  const newCard = cardTemplate.cloneNode(true);
+  
+  newCard.querySelector('.element__image').src = link;
+  newCard.querySelector('.element__title').textContent = name;
+  elementsContainer.prepend(newCard);
 }
 
-// Создает темплейты объектов из массива
-function renderCards() {
-  initialCards.forEach(data => {
-    const elementTemplate = document.querySelector('#template-element').content;
-    const elementsContainer = document.querySelector('.elements');
-    
-    const element = elementTemplate.cloneNode(true);
-    
-    element.querySelector('.element__image').src = data.link;
-    element.querySelector('.element__title').textContent = data.name;
-    
-    elementsContainer.append(element);
-  });
-}
-renderCards()
-
-// Удаляет уже созданные элементы со страницы
-function cleanupCards() {
-  const cardElements = document.querySelectorAll('.element')
-  cardElements.forEach(element => {
-    element.remove();
+function removeCard() {
+  const removeBtns = document.querySelectorAll('.element__trash-btn');
+  removeBtns.forEach(function(item) {
+    item.addEventListener('click', function(){
+      const listItem = item.closest('.element');
+      listItem.remove();
+    })
   })
 }
 
+initialCards.forEach(function (item) {
+  createNewCard(item.name, item.link)
+})
 
-// Проставление лайков
+removeCard()
+
+function createPlace(evt) {
+  evt.preventDefault();
+  let placeInputName = document.querySelector('.popup__input_type_title').value;
+  let placeInputLink = document.querySelector('.popup__input_type_link').value;
+
+  createNewCard(placeInputName, placeInputLink);
+  closePlacePopup();
+  document.querySelector('.popup__input_type_title').value = '';
+  document.querySelector('.popup__input_type_link').value = '';
+
+  removeCard()
+}
+createForm.addEventListener('submit', createPlace);
+
+
 const likeBtn = document.querySelectorAll('.element__like');
 likeBtn.forEach(function(item) {
   item.addEventListener('click', function (event) {
@@ -134,22 +133,93 @@ likeBtn.forEach(function(item) {
   });
 })
 
-// Удаление по клику на иконку
-const trashBtn = document.querySelectorAll('.element__trash-btn');
-function removeCardEvent() {
-  trashBtn.forEach(function(item) {
-    item.addEventListener('click', function () {
-      initialCards.shift()
-      cleanupCards()
-      renderCards()
-    })
-  });
-};
-removeCardEvent()
+
+
+
+
+
+
+
+
+
+
+
+// // Создание новой карточки места; берет значения из инпутов попапа и создает новый
+// // объект в массиве initialCards
+// function createPlace(evt) {
+//   evt.preventDefault();
+
+//   const inputTitle = document.querySelector('.popup__input_type_title');
+//   const inputLink = document.querySelector('.popup__input_type_link');
+
+//   const newCard = {
+//     name: inputTitle.value, 
+//     link: inputLink.value
+//   };
+
+//   initialCards.unshift(newCard);
+//   // удаляет уже созданные элементы со страницы, 
+//   // чтобы заменить их массивом с новым элементом
+//   cleanupCards() 
+//   renderCards() // создает темплейты объектов из массива
+//   closePlacePopup()
+// }
+
+// // Создает темплейты объектов из массива
+// function renderCards() {
+//   initialCards.forEach(data => {
+//     const elementTemplate = document.querySelector('#template-element').content;
+//     const elementsContainer = document.querySelector('.elements');
+    
+//     const element = elementTemplate.cloneNode(true);
+    
+//     element.querySelector('.element__image').src = data.link;
+//     element.querySelector('.element__title').textContent = data.name;
+    
+//     elementsContainer.append(element);
+//   });
+// }
+// renderCards()
+
+// // Удаляет уже созданные элементы со страницы
+// function cleanupCards() {
+//   const cardElements = document.querySelectorAll('.element')
+//   cardElements.forEach(element => {
+//     element.remove();
+//   })
+// }
+
+
+// // Проставление лайков
+// const likeBtn = document.querySelectorAll('.element__like');
+// likeBtn.forEach(function(item) {
+//   item.addEventListener('click', function (event) {
+//     const elementTagetList = event.target.classList;
+//     const likeElement = 'element__like_active'
+//     if (elementTagetList.contains(likeElement)) {
+//       elementTagetList.remove(likeElement)
+//     } else {
+//       elementTagetList.add('element__like_active');
+//     }
+//   });
+// })
+
+// // Удаление по клику на иконку
+// const trashBtn = document.querySelectorAll('.element__trash-btn');
+// function removeCardEvent() {
+//   trashBtn.forEach(function(item) {
+//     item.addEventListener('click', function () {
+//       initialCards.shift()
+//       cleanupCards()
+//       renderCards()
+//     })
+//   });
+// };
+// removeCardEvent()
 
 editButton.addEventListener('click', openEditPopup);
 popupCloseBtn.addEventListener('click', closeEditPopup);
 popupForm.addEventListener('submit', addProfileInfo);
 addPlaceBtn.addEventListener('click', openPlacePopup);
-createForm.addEventListener('submit', createPlace)
+// createForm.addEventListener('submit', createPlace);
 closeAddPlaceBtn.addEventListener('click', closePlacePopup);
