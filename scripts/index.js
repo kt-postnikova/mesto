@@ -81,12 +81,16 @@ function closePlacePopup() {
 const cardTemplate = document.querySelector('#template-element').content;
 const elementsContainer = document.querySelector('.elements');
     
-function createNewCard(name, link) {
+function createNewCard(name, link, prepend=false) {
   const newCard = cardTemplate.cloneNode(true);
   
   newCard.querySelector('.element__image').src = link;
   newCard.querySelector('.element__title').textContent = name;
-  elementsContainer.prepend(newCard);
+  if (prepend) {
+    elementsContainer.prepend(newCard);
+    initialCards.unshift({name: name, link: link});
+  }
+  elementsContainer.append(newCard);
 }
 
 function removeCard() {
@@ -110,12 +114,13 @@ function createPlace(evt) {
   let placeInputName = document.querySelector('.popup__input_type_title').value;
   let placeInputLink = document.querySelector('.popup__input_type_link').value;
 
-  createNewCard(placeInputName, placeInputLink);
+  createNewCard(placeInputName, placeInputLink, true);
   closePlacePopup();
   document.querySelector('.popup__input_type_title').value = '';
   document.querySelector('.popup__input_type_link').value = '';
 
-  removeCard()
+  removeCard();
+  openCard();
 }
 createForm.addEventListener('submit', createPlace);
 
@@ -133,7 +138,41 @@ likeBtn.forEach(function(item) {
   });
 })
 
+function openCard() {
+  const cardImages = document.querySelectorAll('.element__image');
+  console.log(cardImages);
+  cardImages.forEach(function(item, index) {
+    item.addEventListener('click', function() {
+      const imageTemplate = document.querySelector('#imagePopup-template').content;
+      const imageElement = imageTemplate.cloneNode(true);
+      const cardInfo = initialCards[index];
+      
+      console.log(cardInfo.link);
+      console.log(cardInfo.name);
+      imageElement.querySelector('.image-popup__overlay').src = cardInfo.link;
+      imageElement.querySelector('.image-popup__caption').textContent = cardInfo.name;
+      
+      elementsContainer.append(imageElement);
 
+      const closeImage = document.querySelector('.popup__close_place_image-popup');
+      closeImage.addEventListener('click', function() {
+        let popupElement = closeImage.closest('.image-popup')
+        popupElement.remove();
+      })
+    })
+  })
+}
+openCard()
+
+
+
+// const closeImage = document.querySelector('.popup__close_place_image-popup');
+//       const imagePopup = document.querySelector('.image-popup');
+
+//         closeImage.addEventListener('click', function () {
+//           const listItem = closeImage.closest('.element');
+//           listItem.remove();
+//         }); 
 
 
 
