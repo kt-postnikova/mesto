@@ -6,8 +6,7 @@
     margin: 0;
     margin-top: 25px;
     margin-bottom: 75px;
-    
-    align-self: left;
+    margin-left: 22px;
   }
 
   @media screen and (min-width: 978px) {
@@ -16,6 +15,5 @@
         margin-top: 34px;
         margin-left: 36px;
         margin-bottom: 54px;
-        align-self: left;
     }
 }
