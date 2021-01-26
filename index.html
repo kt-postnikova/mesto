@@ -29,7 +29,7 @@
         <footer class="footer page__footer">
             <p class="footer__text">&copy; 2020 Mesto Russia</p>
         </footer>
-        <div class="popup">
+        <div class="popup popup_type_edit-form">
             <div class="popup__container">
                 <button class="popup__close" type="button" aria-label="Закрыть"></button>
                 <h2 class="popup__header">Редактирование профиля</h2>
@@ -42,7 +42,7 @@
         </div>
         <div class="popup popup_type_add-place">
             <div class="popup__container">
-                <button class="popup__close popup__close_type_add-place" type="button" aria-label="Закрыть"></button>
+                <button class="popup__close" type="button" aria-label="Закрыть"></button>
                 <h2 class="popup__header popup__header_type_add-place">Новое место</h2>
                 <form class="popup__form popup__form_type_add-place" name="#popup__form">
                     <input class="popup__input popup__input_type_title" type="text" placeholder="Название">
@@ -51,22 +51,28 @@
                 </form>
             </div>
         </div>
+
+        <div class="popup popup_type_show-image">
+            <figure class="image-popup__block">
+                <button class="popup__close popup__close_type_show-image" type="button" aria-label="Закрыть"></button>
+                <img class="popup__overlay" alt="Картинка пользователя">
+                <figcaption class="popup__caption"></figcaption>
+            </figure>
+        </div>
+
+
+
+
         <template id='template-element'>
-            <div class="element">
-                <div class="image-popup">
-                    <figure class="image-popup__block">
-                        <button class="popup__close popup__close_place_image-popup" type="button" aria-label="Закрыть"></button>
-                        <img class="image-popup__overlay" alt="Картинка пользователя">
-                        <figcaption class="image-popup__caption"></figcaption>
-                    </figure>                     
-                </div>
+            <article class="element">
                 <img class="element__image" alt="Картинка пользователя">
                 <button class="element__trash-btn" type="button" aria-label="Удалить"></button>
                 <div class="element__block">
                     <h2 class="element__title"></h2>
                     <button class="element__like" type="button" aria-label="Нравится"></button>
                 </div>
-            </div>
+            </article>
+
         </template>
         <script src="./scripts/index.js"></script>
     </body>
