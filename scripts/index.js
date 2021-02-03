@@ -121,8 +121,8 @@ function createNewCard(evt) {
 
   closePopup(popupAddPlace);
 
-  document.querySelector('.popup__input_type_title').value = '';
-  document.querySelector('.popup__input_type_link').value = '';
+  inputName.value = '';
+  inputLink.value = '';
 }
 
 
