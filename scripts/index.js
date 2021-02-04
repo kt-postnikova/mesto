@@ -6,7 +6,7 @@ const popupInputName = document.querySelector('.popup__input_type_name');
 const popupInputJob = document.querySelector('.popup__input_type_job');
 
 // Попапы
-const popupEditForm = document.querySelector('.popup_type_edit-form');
+const popupEditForm = document.querySelector('.popup_type_edit-profile');
 const popupAddPlace = document.querySelector('.popup_type_add-place');
 const popupShowImage = document.querySelector('.popup_type_show-image');
 
