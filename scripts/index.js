@@ -186,12 +186,24 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
+const toggleButtonState = (inputList, buttonElement) => {
+  console.log(hasInvalidInput(inputList));
+  if(!hasInvalidInput(inputList)) {
+    buttonElement.classList.remove('form__button_inactive');
+  }
+  else {
+    buttonElement.classList.add('form__button_inactive');
+  }
+}
+
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.form__input'));
+  const buttonElement = formElement.querySelector('.form__button');
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function() {
       checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
     });
   });
 };
