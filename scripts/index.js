@@ -2,8 +2,8 @@
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
-const popupInputName = document.querySelector('.popup__input_type_name');
-const popupInputJob = document.querySelector('.popup__input_type_job');
+const popupInputName = document.querySelector('.form__input_type_name');
+const popupInputJob = document.querySelector('.form__input_type_job');
 
 // Попапы
 const popupEditForm = document.querySelector('.popup_type_edit-profile');
@@ -23,15 +23,15 @@ const closeBtnShowImage = popupShowImage.querySelector('.popup__close');
 const elementsContainer = document.querySelector('.elements');
 
 // Формы отправки
-const editForm = document.querySelector('.popup__form');
-const createForm = popupAddPlace.querySelector('.popup__form_type_add-place');
+const editForm = document.querySelector('.form');
+const createForm = popupAddPlace.querySelector('.form_type_add-place');
 
 // Template карточки
 const cardTemplate = document.querySelector('#template-element').content;
 
 // Инпуты попапа новой карточки
-const inputName = document.querySelector('.popup__input_type_title');
-const inputLink = document.querySelector('.popup__input_type_link');
+const inputName = document.querySelector('.form__input_type_title');
+const inputLink = document.querySelector('.form__input_type_link');
 
 
 function openPopup(popup) {
@@ -78,7 +78,7 @@ function handleDeleteButtonClick(cardTemplate) {
 function insertCardValue(cardTemplate, cardInfo) {
   cardTemplate.querySelector('.element__image').addEventListener('click', function (event) {
 
-    popupShowImage.querySelector('.popup__overlay').src = cardInfo.link;
+    popupShowImage.querySelector('.popup__image').src = cardInfo.link;
     popupShowImage.querySelector('.popup__caption').textContent = cardInfo.name;
 
     openPopup(popupShowImage);
