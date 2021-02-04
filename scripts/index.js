@@ -145,3 +145,68 @@ closeBtnShowImage.addEventListener('click', function () {
 })
 editForm.addEventListener('submit', addProfileInfo);
 popupEditBtn.addEventListener('click', insertProfileValue);
+
+
+
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  // span
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // к inputУ добавляем красную линию
+  inputElement.classList.add('form__input_error-line');
+  // в span - текст ошибки 
+  errorElement.textContent = errorMessage;
+  // к spanУ также добавляем стили
+  errorElement.classList.add('form__input_error-message');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  // span
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // убираем красную линию у input
+  inputElement.classList.remove('form__input_error-line');
+  // удаляем стили у span
+  errorElement.classList.remove('form__input_error-message');
+  // удаляем текст ошибки
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if(!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  }
+  else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function() {
+      checkInputValidity(formElement, inputElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.form'));
+
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function(evt) {
+      evt.preventDefault();
+    });
+
+    setEventListeners(formElement);
+
+  });
+};
+
+enableValidation();
