@@ -6,9 +6,14 @@ const popupInputName = document.querySelector('.form__input_type_name');
 const popupInputJob = document.querySelector('.form__input_type_job');
 
 // Попапы
-// const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-// const popupAddPlace = document.querySelector('.popup_type_add-place');
-// const popupShowImage = document.querySelector('.popup_type_show-image');
+const popupEditProfile = document.querySelector('.popup_type_edit-profile');
+const popupAddPlace = document.querySelector('.popup_type_add-place');
+const popupShowImage = document.querySelector('.popup_type_show-image');
+
+// Оверлеи
+const overlayEditProfile = document.querySelector('.popup__overlay');
+const overlayAddPlace = document.querySelector('.popup__overlay_type_add-place');
+const overlayShowImage = document.querySelector('.popup__overlay_type_show-image');
 
 // Кнопки для открытия попапов
 const popupEditBtn = document.querySelector('.profile__button');
@@ -33,6 +38,7 @@ const cardTemplate = document.querySelector('#template-element').content;
 const inputName = document.querySelector('.form__input_type_title');
 const inputLink = document.querySelector('.form__input_type_link');
 
+const btnAddPlace = document.querySelector('.form__button_type_add-place');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -113,9 +119,6 @@ initialCards.forEach(function (item) {
   addNewCard(newCard);
 })
 
-const btnAddPlace = document.querySelector('.form__button_type_add-place');
-
-
 function createNewCard(evt) {
   evt.preventDefault();
 
@@ -130,10 +133,48 @@ function createNewCard(evt) {
   disableSubmit(btnAddPlace);
 }
 
+const closePopupByEsc = () => {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
 
+  popupList.forEach(function (popupElement) {
 
+      document.addEventListener('keydown', function (evt) {
+          if (evt.key === 'Escape') {
+              closePopup(popupElement);
+          }
+      })
+  })
+}
 
+const closePopupByOverlayClick = (overlayElement, popupElement) => {
+  const overlayList = Array.from(document.querySelectorAll('.popup__overlay'));
 
+  overlayList.forEach(function () {
+      overlayElement.addEventListener('mousedown', function () {
+          closePopup(popupElement);
+      })
+  })
+}
+
+const closeObjectList = [
+  {
+      overlay: overlayEditProfile,
+      popup: popupEditProfile,
+  },
+  {
+      overlay: overlayAddPlace,
+      popup: popupAddPlace,
+  },
+  {
+      overlay: overlayShowImage,
+      popup: popupShowImage,
+  }
+]
+
+for (const closeObj of closeObjectList) {
+  closePopupByEsc(closeObj.popup)
+  closePopupByOverlayClick(closeObj.overlay, closeObj.popup)
+}
 
 createForm.addEventListener('submit', createNewCard);
 popupEditBtn.addEventListener('click', function () {

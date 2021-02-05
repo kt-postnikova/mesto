@@ -53,5 +53,5 @@
 @import url('../blocks/form/__input/_error-line/form__input_error-line.css');
 @import url('../blocks/form/__input/_error-message/form__input_error-message.css');
 @import url('../blocks/form/__error/form__error.css');
-@import url('../blocks/form/__button/_inactive/form__button_inactive.css');
 @import url('../blocks/form/__button/form__button.css');
+@import url('../blocks/form/__button/_inactive/form__button_inactive.css');

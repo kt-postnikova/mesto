@@ -1,20 +1,3 @@
-const formEditProfile = document.forms.formEditProfile;
-const formAddPlace = document.forms.formAddPlace;
-
-const name = formEditProfile.elements.name;
-const job = formEditProfile.elements.job;
-
-const title = formAddPlace.elements.title;
-const link = formAddPlace.elements.link;
-
-const overlayEditProfile = document.querySelector('.popup__overlay');
-const overlayAddPlace = document.querySelector('.popup__overlay_type_add-place');
-const overlayShowImage = document.querySelector('.popup__overlay_type_show-image');
-
-const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-const popupAddPlace = document.querySelector('.popup_type_add-place');
-const popupShowImage = document.querySelector('.popup_type_show-image');
-
 selectors = {
     formSelector: '.form',
     inputSelector: '.form__input',
@@ -24,26 +7,26 @@ selectors = {
     errorClass: 'form__input_error-message'
 };
 
-const showInputError = (formElement, inputElement, errorMessage, selectorsObj) => {
+const showInputError = (formElement, inputElement, errorMessage, selectorsObject) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add(selectorsObj.inputErrorClass);
+    inputElement.classList.add(selectorsObject.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(selectorsObj.errorClass);
+    errorElement.classList.add(selectorsObject.errorClass);
 };
 
-const hideInputError = (formElement, inputElement, selectorsObj) => {
+const hideInputError = (formElement, inputElement, selectorsObject) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(selectorsObj.inputErrorClass);
-    errorElement.classList.remove(selectorsObj.errorClass);
+    inputElement.classList.remove(selectorsObject.inputErrorClass);
+    errorElement.classList.remove(selectorsObject.errorClass);
     errorElement.textContent = '';
 };
 
-const checkInputValidity = (formElement, inputElement, selectorsObj) => {
+const checkInputValidity = (formElement, inputElement, selectorsObject) => {
     if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage, selectorsObj);
+        showInputError(formElement, inputElement, inputElement.validationMessage, selectorsObject);
     }
     else {
-        hideInputError(formElement, inputElement, selectorsObj);
+        hideInputError(formElement, inputElement, selectorsObject);
     }
 };
 
@@ -53,15 +36,15 @@ const hasInvalidInput = (inputList) => {
     });
 };
 
-const toggleButtonState = (inputList, buttonElement, selectorsObj) => {
+const toggleButtonState = (inputList, buttonElement, selectorsObject) => {
     console.log(hasInvalidInput(inputList));
     if (!hasInvalidInput(inputList)) {
-        buttonElement.classList.remove(selectorsObj.inactiveButtonClass);
+        buttonElement.classList.remove(selectorsObject.inactiveButtonClass);
         buttonElement.removeAttribute('disabled');
     }
     else {
         buttonElement.setAttribute('disabled', true);
-        buttonElement.classList.add(selectorsObj.inactiveButtonClass);
+        buttonElement.classList.add(selectorsObject.inactiveButtonClass);
     }
 }
 
@@ -70,73 +53,29 @@ const disableSubmit = (element) => {
     buttonElement.setAttribute('disabled', true);
 }
 
-const setEventListeners = (formElement, selectorsObj) => {
-    const inputList = Array.from(formElement.querySelectorAll(selectorsObj.inputSelector));
-    const buttonElement = formElement.querySelector(selectorsObj.submitButtonSelector);
+const setEventListeners = (formElement, selectorsObject) => {
+    const inputList = Array.from(formElement.querySelectorAll(selectorsObject.inputSelector));
+    const buttonElement = formElement.querySelector(selectorsObject.submitButtonSelector);
 
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', function () {
-            checkInputValidity(formElement, inputElement, selectorsObj);
-            toggleButtonState(inputList, buttonElement, selectorsObj);
+            checkInputValidity(formElement, inputElement, selectorsObject);
+            toggleButtonState(inputList, buttonElement, selectorsObject);
         });
     });
 };
 
-const enableValidation = (selectorsObj) => {
-    const formList = Array.from(document.querySelectorAll(selectorsObj.formSelector));
+const enableValidation = (selectorsObject) => {
+    const formList = Array.from(document.querySelectorAll(selectorsObject.formSelector));
 
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', function (evt) {
             evt.preventDefault();
         });
 
-        setEventListeners(formElement, selectorsObj);
+        setEventListeners(formElement, selectorsObject);
 
     });
 };
 
 enableValidation(selectors);
-
-const closePopupByEsc = () => {
-    const popupList = Array.from(document.querySelectorAll('.popup'));
-
-    popupList.forEach(function (popupElement) {
-
-        document.addEventListener('keydown', function (evt) {
-            if (evt.key === 'Escape') {
-                closePopup(popupElement);
-            }
-        })
-    })
-}
-
-
-const closePopupByOverlayClick = (overlayElement, popupElement) => {
-    const overlayList = Array.from(document.querySelectorAll('.popup__overlay'));
-
-    overlayList.forEach(function () {
-        overlayElement.addEventListener('mousedown', function () {
-            closePopup(popupElement);
-        })
-    })
-}
-
-const closeObjList = [
-    {
-        overlay: overlayEditProfile,
-        popup: popupEditProfile,
-    },
-    {
-        overlay: overlayAddPlace,
-        popup: popupAddPlace,
-    },
-    {
-        overlay: overlayShowImage,
-        popup: popupShowImage,
-    }
-]
-
-for (const closeObj of closeObjList) {
-    closePopupByEsc(closeObj.popup)
-    closePopupByOverlayClick(closeObj.overlay, closeObj.popup)
-}
