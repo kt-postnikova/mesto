@@ -40,12 +40,27 @@ const inputLink = document.querySelector('.form__input_type_link');
 
 const btnAddPlace = document.querySelector('.form__button_type_add-place');
 
+
+function overlayHandler(popup, state) {
+  const activeOverlay = popup.querySelector('.popup__overlay');
+  if( state === 'add') {
+    activeOverlay.addEventListener('mousedown', closePopupByOverlayClick);
+  } 
+  else if ( state === 'remove' ) {
+    activeOverlay.removeEventListener('mousedown', closePopupByOverlayClick);
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEsc);
+  overlayHandler(popup, 'add');
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
+  overlayHandler(popup, 'remove');
 }
 
 function addProfileInfo(evt) {
@@ -133,27 +148,16 @@ function createNewCard(evt) {
   disableSubmit(btnAddPlace);
 }
 
-const closePopupByEsc = () => {
-  const popupList = Array.from(document.querySelectorAll('.popup'));
-
-  popupList.forEach(function (popupElement) {
-
-      document.addEventListener('keydown', function (evt) {
-          if (evt.key === 'Escape') {
-              closePopup(popupElement);
-          }
-      })
-  })
+function closePopupByEsc(evt) {
+  const activePopup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(activePopup);
+  }
 }
 
-const closePopupByOverlayClick = (overlayElement, popupElement) => {
-  const overlayList = Array.from(document.querySelectorAll('.popup__overlay'));
-
-  overlayList.forEach(function () {
-      overlayElement.addEventListener('mousedown', function () {
-          closePopup(popupElement);
-      })
-  })
+function closePopupByOverlayClick() {
+  const activePopup = document.querySelector('.popup_opened');
+  closePopup(activePopup); 
 }
 
 const closeObjectList = [
@@ -173,7 +177,7 @@ const closeObjectList = [
 
 for (const closeObj of closeObjectList) {
   closePopupByEsc(closeObj.popup)
-  closePopupByOverlayClick(closeObj.overlay, closeObj.popup)
+  //closePopupByOverlayClick(closeObj.overlay, closeObj.popup)
 }
 
 createForm.addEventListener('submit', createNewCard);
