@@ -33,14 +33,14 @@
             <div class="popup__overlay"></div>
                 <div class="popup__container">
                     <button class="popup__close" type="button" aria-label="Закрыть"></button>
-                    <form class="form" name="#form" novalidate>
+                    <form class="form" name="formEditProfile" novalidate>
                         <h2 class="form__header">Редактирование профиля</h2>
                         <label class="form__field">
-                            <input id="name-input" class="form__input form__input_type_name" type="text" minlength="2" maxlength="40" required>
+                            <input id="name-input" class="form__input form__input_type_name" name="name" type="text" minlength="2" maxlength="40" required>
                             <span class="form__error name-input-error"></span>
                         </label>
                         <label class="form__field">
-                            <input id="job-input" class="form__input form__input_type_job" type="text" minlength="2" maxlength="200" required>
+                            <input id="job-input" class="form__input form__input_type_job" name="job" type="text" minlength="2" maxlength="200" required>
                             <span class="form__error job-input-error"></span>
                         </label>
                         <button class="form__button" type="submit">Сохранить</button>
@@ -51,17 +51,17 @@
             <div class="popup__overlay popup__overlay_type_add-place"></div>
                 <div class="popup__container">
                     <button class="popup__close" type="button" aria-label="Закрыть"></button>
-                    <form class="form form_type_add-place" name="#form-add-place" novalidate>
+                    <form class="form form_type_add-place" name="formAddPlace" novalidate>
                         <h2 class="form__header form__header_type_add-place">Новое место</h2>
                         <label class="form__field">
-                            <input id="title-input" class="form__input form__input_type_title" type="text" placeholder="Название" minlength="1" maxlength="30" required>
+                            <input id="title-input" class="form__input form__input_type_title" name="title" type="text" placeholder="Название" minlength="1" maxlength="30" required>
                             <span class="form__error title-input-error"></span>
                         </label>
                         <label class="form__field">
-                            <input id="link-input" class="form__input form__input_type_link" type="url" placeholder="Ссылка на картинку" required>
+                            <input id="link-input" class="form__input form__input_type_link" name="link" type="url" placeholder="Ссылка на картинку" required>
                             <span class="form__error link-input-error"></span>
                         </label>
-                        <button class="form__button form__button_type_add-place form__button_inactive" type="submit">Создать</button>
+                        <button class="form__button form__button_type_add-place form__button_inactive" type="submit" disabled="true">Создать</button>
                     </form>
                 </div>
         </div>
@@ -86,6 +86,7 @@
             </article>
         </template>
 
+        <script src="./scripts/validate.js"></script>
         <script src="./scripts/initial-cards.js"></script>
         <script src="./scripts/index.js"></script>
     </body>
