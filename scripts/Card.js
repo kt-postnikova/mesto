@@ -7,19 +7,19 @@ export default class Card {
         this._card;
     }
 
-    _getTemplate() { // забираем вёрстку шаблона
+    _getTemplate() {
         const cardTemplate = document
             .querySelector(this.template)
             .content
             .querySelector('.element')
             .cloneNode(true);
 
-        return cardTemplate; // получаем пустой элемент, который нужно опубликовать, чтобы он стал карточкой с данными
+        return cardTemplate;
     }
 
     generateCard() {
-        this._card = this._getTemplate(); // cardTemplate
-        this.setEventListeners();
+        this._card = this._getTemplate();
+        this._setEventListeners();
 
         this._card.querySelector('.element__image').src = this.link;
         this._card.querySelector('.element__image').alt = this.name;
@@ -28,11 +28,11 @@ export default class Card {
 
     appendCard() {
         this.generateCard()
-        this.selectors['cardContainer'].prepend(this._card); // вставляем шаблон (карточку) в верстку
+        this.selectors['cardContainer'].prepend(this._card);
         this.selectors['popupAddPlace'].classList.remove('popup_opened');
     }
 
-    setEventListeners() {
+    _setEventListeners() {
         const likeBtn = this._card.querySelector('.element__like');
         likeBtn.addEventListener('click', function(evt) {
             evt.target.classList.toggle('element__like_active');
