@@ -1,3 +1,5 @@
+import {openPopup} from '../scripts/utilis.js'
+
 export default class Card {
     constructor(data, selectors, template) {
         this.link = data.link;
@@ -49,7 +51,7 @@ export default class Card {
         cardImage.addEventListener('click', function() {
             popupShowImageSelector.querySelector('.popup__image').src = cardImage.src;
             popupShowImageSelector.querySelector('.popup__caption').textContent = cardImage.alt;
-            popupShowImageSelector.classList.add('popup_opened');
+            openPopup(popupShowImageSelector);
         })
     }
 }
