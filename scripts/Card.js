@@ -6,7 +6,6 @@ export default class Card {
         this.name = data.name;
         this.selectors = selectors;
         this.template = template;
-        this._card;
     }
 
     _getTemplate() {
@@ -20,38 +19,44 @@ export default class Card {
     }
 
     generateCard() {
-        this._card = this._getTemplate();
-        this._setEventListeners();
+        const card = this._getTemplate();
+        this._setEventListeners(card);
 
-        this._card.querySelector('.element__image').src = this.link;
-        this._card.querySelector('.element__image').alt = this.name;
-        this._card.querySelector('.element__title').textContent = this.name;
+        card.querySelector('.element__image').src = this.link;
+        card.querySelector('.element__image').alt = this.name;
+        card.querySelector('.element__title').textContent = this.name;
+
+        return card
     }
 
-    appendCard() {
-        this.generateCard()
-        this.selectors['cardContainer'].prepend(this._card);
-        this.selectors['popupAddPlace'].classList.remove('popup_opened');
+    _likeCard(evt) {
+        evt.target.classList.toggle('element__like_active');
     }
 
-    _setEventListeners() {
-        const likeBtn = this._card.querySelector('.element__like');
-        likeBtn.addEventListener('click', function(evt) {
-            evt.target.classList.toggle('element__like_active');
+    _deleteCard(trashBtn) {
+        const selectedCard = trashBtn.closest('.element');
+        selectedCard.remove();
+    }
+
+    _insertCardImageValue(cardImage) {
+        const popupShowImageSelector = this.selectors['popupShowImage']
+        popupShowImageSelector.querySelector('.popup__image').src = cardImage.src;
+        popupShowImageSelector.querySelector('.popup__caption').textContent = cardImage.alt;
+        openPopup(popupShowImageSelector);
+    }
+
+    _setEventListeners(card) {
+        const likeBtn = card.querySelector('.element__like');
+        likeBtn.addEventListener('click', this._likeCard)
+
+        const trashBtn = card.querySelector('.element__trash-btn');
+        trashBtn.addEventListener('click', () => {
+            this._deleteCard(trashBtn)
         })
 
-        const trashBtn = this._card.querySelector('.element__trash-btn');
-        trashBtn.addEventListener('click', function() {
-            const selectedCard = trashBtn.closest('.element');
-            selectedCard.remove();
-        })
-
-        const cardImage = this._card.querySelector('.element__image');
-        let popupShowImageSelector = this.selectors['popupShowImage']
-        cardImage.addEventListener('click', function() {
-            popupShowImageSelector.querySelector('.popup__image').src = cardImage.src;
-            popupShowImageSelector.querySelector('.popup__caption').textContent = cardImage.alt;
-            openPopup(popupShowImageSelector);
+        const cardImage = card.querySelector('.element__image');
+        cardImage.addEventListener('click', () => {
+            this._insertCardImageValue(cardImage)
         })
     }
 }

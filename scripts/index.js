@@ -1,6 +1,7 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
-import {openPopup, closePopup} from '../scripts/utilis.js'
+import {openPopup, closePopup} from '../scripts/utilis.js';
+import {initialCards} from '../scripts/initial-cards.js';
 
 const addCardBtn = document.querySelector('.profile__add-button');
 const editProfileBtn = document.querySelector('.profile__button');
@@ -40,37 +41,14 @@ let selectors = {
     'editProfileBtn': editProfileBtn,
     'closeEditProfileBtn': closeEditProfileBtn,
     'editForm': editForm,
-    'popupShowImage': popupShowImage,
 }
 
 const TEMPLATE_ELEMENT = '#template-element';
 
 initialCards.forEach((item) => {
-  const newCard = new Card(item, selectors, TEMPLATE_ELEMENT); // заполняем карточки дефолтными значениями
-  newCard.appendCard()
+  const newCard = new Card(item, selectors, TEMPLATE_ELEMENT).generateCard();
+  appendCard(newCard)
 })
-
-// function openPopup(popup) {
-//     popup.classList.add('popup_opened');
-//     document.addEventListener('keydown', closePopupByEsc);
-//     overlayHandler(popup, 'add');
-// }
-
-// function closePopup(popup) {
-//     popup.classList.remove('popup_opened');
-//     document.removeEventListener('keydown', closePopupByEsc);
-//     overlayHandler(popup, 'remove');
-// }
-
-// function overlayHandler(popup, state) {
-//   const activeOverlay = popup.querySelector('.popup__overlay');
-//   if( state === 'add') {
-//     activeOverlay.addEventListener('mousedown', closePopupByOverlayClick);
-//   }
-//   else if ( state === 'remove' ) {
-//     activeOverlay.removeEventListener('mousedown', closePopupByOverlayClick);
-//   }
-// }
 
 function addProfileInfo(evt) {
   evt.preventDefault();
@@ -88,50 +66,16 @@ function insertProfileValue(evt) {
   popupInputJob.value = profileJob.innerText;
 }
 
-// function closePopupByEsc(evt) {
-//   const activePopup = document.querySelector('.popup_opened');
-//   if (evt.key === 'Escape') {
-//     closePopup(activePopup);
-//   }
-// }
+function appendCard(card) {
+  selectors['cardContainer'].prepend(card);
+  selectors['popupAddPlace'].classList.remove('popup_opened');
+}
 
-// function closePopupByOverlayClick() {
-//   const activePopup = document.querySelector('.popup_opened');
-//   closePopup(activePopup); 
-// }
-
-// const closeObjectList = [
-//   {
-//       overlay: overlayEditProfile,
-//       popup: popupEditProfile,
-//   },
-//   {
-//       overlay: overlayAddPlace,
-//       popup: popupAddPlace,
-//   },
-//   {
-//       overlay: overlayShowImage,
-//       popup: popupShowImage,
-//   }
-// ]
-
-// for (const closeObj of closeObjectList) {
-//   closePopupByEsc(closeObj.popup)
-// }
-
-const selectorsValidate = {
-  formElement: '.form',
-  inputElement: '.form__input',
-  buttonElement: '.form__button',
-  formInputError: 'form__input_error-line',
-  formInputErrorMessage: 'form__input_error-message',
-  formButtonInactive: 'form__button_inactive'
-};
-
-const validate = new FormValidator(selectorsValidate);
-validate.enableValidation();
-
-
+const formList = Array.from(document.querySelectorAll('.form'));
+formList.forEach(form => {
+  const validate = new FormValidator(form);
+  validate.enableValidation();
+});
 
 selectors['editProfileBtn'].addEventListener('click', function () {
   openPopup(popupEditProfile);
@@ -159,8 +103,8 @@ selectors['formAddPlace'].addEventListener('submit', (evt) => {
         'link': inputLink.value,
         'name': inputTitle.value,
     };
-    const newCard = new Card(data, selectors, TEMPLATE_ELEMENT);
-    newCard.appendCard()
+    const newCard = new Card(data, selectors, TEMPLATE_ELEMENT).generateCard();
+    appendCard(newCard)
 })
 
 selectors['closeShowImageBtn'].addEventListener('click', function() {
