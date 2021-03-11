@@ -1,8 +1,9 @@
 import Card from './components/Card.js';
 import Section from './components/Section.js';
-import { TEMPLATE_ELEMENT, initialCards, selectors, cardContainer } from './utils/constants.js';
+import Popup from './components/Popup.js';
+import { TEMPLATE_ELEMENT, initialCards, selectors, cardContainer, profileName, profileJob, popupInputName, popupInputJob, popupEditProfile } from './utils/constants.js';
 import FormValidator from './components/FormValidator.js';
-import { openPopup, closePopup } from '../scripts/utilis.js';
+// import { openPopup, closePopup } from '../scripts/utilis.js';
 
 
 
@@ -17,6 +18,9 @@ const defaultCardList = new Section({
 }, cardContainer);
 
 defaultCardList.renderItems();
+
+
+
 // initialCards.forEach((item) => {
 //   const newCard = new Card(item, selectors, TEMPLATE_ELEMENT).generateCard();
 //   appendCard(newCard)
@@ -24,25 +28,26 @@ defaultCardList.renderItems();
 
 
 
+const popup = new Popup(popupEditProfile);
 
 
 
+function addProfileInfo(evt) {
+  evt.preventDefault();
 
-// function addProfileInfo(evt) {
-//   evt.preventDefault();
+  profileName.textContent = popupInputName.value;
+  profileJob.textContent = popupInputJob.value;
 
-//   profileName.textContent = popupInputName.value;
-//   profileJob.textContent = popupInputJob.value;
+  // closePopup(popupEditProfile);
+  popup.close();
+}
 
-//   closePopup(popupEditProfile);
-// }
+function insertProfileValue(evt) {
+  evt.preventDefault();
 
-// function insertProfileValue(evt) {
-//   evt.preventDefault();
-
-//   popupInputName.value = profileName.innerText;
-//   popupInputJob.value = profileJob.innerText;
-// }
+  popupInputName.value = profileName.innerText;
+  popupInputJob.value = profileJob.innerText;
+}
 
 // function appendCard(card) {
 //   selectors['cardContainer'].prepend(card);
@@ -55,17 +60,19 @@ defaultCardList.renderItems();
 //   validate.enableValidation();
 // });
 
-// selectors['editProfileBtn'].addEventListener('click', function () {
-//   openPopup(popupEditProfile);
-// });
+selectors['editProfileBtn'].addEventListener('click', function () {
+  // openPopup(popupEditProfile);
+  popup.open();
+});
 
 // selectors['closeEditProfileBtn'].addEventListener('click', function () {
-//   closePopup(popupEditProfile);
+//   //closePopup(popupEditProfile);
+//   popup.close();
 // });
 
-// selectors['editProfileBtn'].addEventListener('click', insertProfileValue);
+selectors['editProfileBtn'].addEventListener('click', insertProfileValue);
 
-// selectors['editForm'].addEventListener('submit', addProfileInfo);
+selectors['editForm'].addEventListener('submit', addProfileInfo);
 
 // selectors['addCardBtn'].addEventListener('click', function () {
 //   openPopup(selectors['popupAddPlace']);

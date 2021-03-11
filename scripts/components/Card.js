@@ -1,4 +1,4 @@
-import { openPopup } from '../utilis.js'
+//import { openPopup } from '../utilis.js'
 
 export default class Card {
     constructor(data, selectors, template) {
