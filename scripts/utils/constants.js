@@ -23,6 +23,23 @@ export const editForm = popupEditProfile.querySelector('.form');
 export const inputTitle = formAddPlace.querySelector('.form__input_type_title');
 export const inputLink = formAddPlace.querySelector('.form__input_type_link');
 
+export const TEMPLATE_ELEMENT = '#template-element';
+
+export const selectors = {
+    'addCardBtn': addCardBtn,
+    'popupAddPlace': popupAddPlace,
+    'popupShowImage': popupShowImage,
+    'closeAddPlaceBtn': closeAddPlaceBtn,
+    'closeShowImageBtn': closeShowImageBtn,
+    'cardContainer': cardContainer,
+    'formAddPlace': formAddPlace,
+    'inputTitle': inputTitle,
+    'inputLink': inputLink,
+    'editProfileBtn': editProfileBtn,
+    'closeEditProfileBtn': closeEditProfileBtn,
+    'editForm': editForm,
+}
+
 export const initialCards = [
     {
         name: 'Архыз',
