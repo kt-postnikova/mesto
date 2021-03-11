@@ -28,8 +28,8 @@ defaultCardList.renderItems();
 
 
 
-const popup = new Popup(popupEditProfile);
-
+const defaultPopupEditProfile = new Popup(popupEditProfile);
+defaultPopupEditProfile.setEventListeners()
 
 
 function addProfileInfo(evt) {
@@ -39,7 +39,7 @@ function addProfileInfo(evt) {
   profileJob.textContent = popupInputJob.value;
 
   // closePopup(popupEditProfile);
-  popup.close();
+  defaultPopupEditProfile.close();
 }
 
 function insertProfileValue(evt) {
@@ -62,7 +62,7 @@ function insertProfileValue(evt) {
 
 selectors['editProfileBtn'].addEventListener('click', function () {
   // openPopup(popupEditProfile);
-  popup.open();
+  defaultPopupEditProfile.open();
 });
 
 // selectors['closeEditProfileBtn'].addEventListener('click', function () {
