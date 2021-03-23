@@ -1,16 +1,13 @@
-//import { openPopup } from '../utilis.js'
-
 export default class Card {
-    constructor(data, selectors, template) {
-        this.link = data.link;
-        this.name = data.name;
-        this.selectors = selectors;
-        this.template = template;
+    constructor({ data, cardSelector, handleCardClick }) {
+        this.data = data;
+        this.handleCardClick = handleCardClick;
+        this.cardSelector = cardSelector;
     }
 
     _getTemplate() {
         const cardTemplate = document
-            .querySelector(this.template)
+            .querySelector(this.cardSelector)
             .content
             .querySelector('.element')
             .cloneNode(true);
@@ -20,43 +17,35 @@ export default class Card {
 
     generateCard() {
         const card = this._getTemplate();
-        this._setEventListeners(card);
+        this.setEventListeners(card);
 
-        card.querySelector('.element__image').src = this.link;
-        card.querySelector('.element__image').alt = this.name;
-        card.querySelector('.element__title').textContent = this.name;
+        card.querySelector('.element__image').src = this.data.link;
+        card.querySelector('.element__image').alt = this.data.name;
+        card.querySelector('.element__title').textContent = this.data.name;
 
-        return card
+
+        return card;
     }
 
     _likeCard(evt) {
-        evt.target.classList.toggle('element__like_active');
+        evt.target.classList.toggle('element__like_active')
     }
 
-    _deleteCard(trashBtn) {
-        const selectedCard = trashBtn.closest('.element');
-        selectedCard.remove();
-    }
-
-    _insertCardImageValue(cardImage) {
-        const popupShowImageSelector = this.selectors['popupShowImage']
-        popupShowImageSelector.querySelector('.popup__image').src = cardImage.src;
-        popupShowImageSelector.querySelector('.popup__caption').textContent = cardImage.alt;
-        openPopup(popupShowImageSelector);
-    }
-
-    _setEventListeners(card) {
+    setEventListeners(card) {
         const likeBtn = card.querySelector('.element__like');
-        likeBtn.addEventListener('click', this._likeCard)
+        likeBtn.addEventListener('click', this._likeCard);
 
         const trashBtn = card.querySelector('.element__trash-btn');
         trashBtn.addEventListener('click', () => {
-            this._deleteCard(trashBtn)
-        })
+            const deletedCard = trashBtn.parentElement;
+            deletedCard.remove();
+        });
+
 
         const cardImage = card.querySelector('.element__image');
-        cardImage.addEventListener('click', () => {
-            this._insertCardImageValue(cardImage)
+        cardImage.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            this.handleCardClick(this.data);
         })
     }
 }

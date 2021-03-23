@@ -1,5 +1,3 @@
-import { closeEditProfileBtn } from '../utils/constants.js';
-
 export default class Popup {
     constructor(popupSelector) {
         this.popupSelector = popupSelector;
@@ -7,7 +5,11 @@ export default class Popup {
 
     open() {
         this.popupSelector.classList.add('popup_opened');
-        this._handleEscClose(this.popupSelector)
+        this._handleEscClose();
+        const overlay = this.popupSelector.querySelector('.popup__overlay');
+        overlay.addEventListener('click', () => {
+            this.close(this.popupSelector);
+        })
     }
 
     close() {
@@ -15,17 +17,16 @@ export default class Popup {
     }
 
     _handleEscClose() {
-        const activePopup = document.querySelector('.popup_opened');
         document.addEventListener('keydown', (evt) => {
             if (evt.key === 'Escape') {
-                this.close();
+                this.close(this.popupSelector);
             }
-        })
+        });
     }
 
     setEventListeners() {
-        closeEditProfileBtn.addEventListener('click', () => {
-            this.close()
+        this.popupSelector.querySelector('.popup__close').addEventListener('click', () => {
+            this.close(this.popupSelector);
         })
     }
 }
