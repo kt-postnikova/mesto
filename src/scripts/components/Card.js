@@ -17,11 +17,13 @@ export default class Card {
 
     generateCard() {
         const card = this._getTemplate();
+        const cardImage = card.querySelector('.element__image');
+        const cardTitle = card.querySelector('.element__title');
         this.setEventListeners(card);
 
-        card.querySelector('.element__image').src = this.data.link;
-        card.querySelector('.element__image').alt = this.data.name;
-        card.querySelector('.element__title').textContent = this.data.name;
+        cardImage.src = this.data.link;
+        cardImage.alt = this.data.name;
+        cardTitle.textContent = this.data.name;
 
 
         return card;
