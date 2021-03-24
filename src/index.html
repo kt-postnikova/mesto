@@ -11,19 +11,20 @@
 
 <body class="page">
     <header class="header page__header">
-        <a href="#" target="_self"><img class="header__logo" src="./images/logo.svg" alt="Логотип Место"></a>
+        <a href="#" target="_self"><img class="header__logo" src="<%=require('./images/logo.svg')%>"
+                alt="Логотип Место"></a>
     </header>
     <main class="content page__content">
         <section class="profile content__profile">
             <div class="profile__block">
-                <img class="profile__avatar" src="./images/avatar.png" alt="Аватар пользователя">
+                <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватар пользователя">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
                     <button class="profile__button" type="button" aria-label="Редактировать профиль"></button>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
             </div>
-            <button class="profile__add-button"><img src="./images/add-button.svg" alt="Создать"
+            <button class="profile__add-button"><img src="<%=require('./images/add-button.svg')%>" alt="Создать"
                     class="profile__add-button-img"></button>
         </section>
         <section class="elements content__elements">
