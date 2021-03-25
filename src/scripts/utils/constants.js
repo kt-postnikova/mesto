@@ -56,4 +56,6 @@ export const inputCardLink = addCardPopup.querySelector('.form__input_type_link'
 export const formEditProfile = editPopup.querySelector('.form');
 export const formAddCard = addCardPopup.querySelector('.form');
 
-export const cardContainer = document.querySelector('.elements');
+export const cardContainer = '.elements';
+
+export const ESC_KEYCODE = 'Escape';
