@@ -1,22 +1,18 @@
 export default class UserInfo {
-    constructor(data, { profileName, profileJob }) {
+    constructor({ profileName, profileJob }) {
         this.profileName = profileName;
         this.profileJob = profileJob;
-        this.inputName = data.inputName;
-        this.inputJob = data.inputJob
     }
 
-    getUserInfo() {
+    getUserInfo(data) {
         const userInfo = {
             name: this.profileName.textContent,
-            job: this.profileJob.textContent
+            job: this.profileJob.textContent,
         }
+        data.inputName.value = userInfo.name;
+        data.inputJob.value = userInfo.job;
 
-        this.inputName.value = userInfo.name;
-        this.inputJob.value = userInfo.job;
-
-        return userInfo
-
+        return userInfo;
     }
 
     setUserInfo(data) {
@@ -24,4 +20,3 @@ export default class UserInfo {
         this.profileJob.textContent = data.job;
     }
 }
-

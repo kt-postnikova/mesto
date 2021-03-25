@@ -64,19 +64,17 @@ const addCard = new PopupWithForm({
   },
 });
 
-
-const userInfo = new UserInfo({ inputName, inputJob }, { profileName, profileJob });
+const userInfo = new UserInfo({ profileName, profileJob });
 
 const profile = new PopupWithForm({
   popupSelector: editPopup,
   formSelector: formEditProfile,
   submitForm: (item) => {
-    const info = new UserInfo(item, { profileName, profileJob });
+    const info = new UserInfo({ profileName, profileJob });
     info.setUserInfo(item);
     profile.close();
   }
 })
-
 
 popupWithImage.setEventListeners();
 popupEditProfile.setEventListeners();
@@ -85,7 +83,7 @@ addCard.setEventListeners();
 
 profileButton.addEventListener('click', function () {
   popupEditProfile.open();
-  userInfo.getUserInfo();
+  userInfo.getUserInfo({ inputName, inputJob });
 });
 
 addCardButton.addEventListener('click', function () {
