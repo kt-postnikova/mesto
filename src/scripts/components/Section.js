@@ -2,7 +2,7 @@ export default class Section {
     constructor({ data, renderer }, containerSelector) {
         this.data = data;
         this.renderer = renderer;
-        this.container = containerSelector;
+        this.container = document.querySelector(containerSelector);
     }
 
     setItems(element) {
