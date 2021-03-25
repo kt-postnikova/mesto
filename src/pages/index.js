@@ -58,7 +58,7 @@ const addCard = new PopupWithForm({
       }
     });
     const cardElement = card.generateCard();
-    cardContainer.prepend(cardElement);
+    document.querySelector(cardContainer).prepend(cardElement);
     addCard.close();
     addCard.clear();
   },
