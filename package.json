@@ -4,7 +4,7 @@
   "description": "ссылка на проект: https://kt-postnikova.github.io/mesto/index.html",
   "main": "index.js",
   "scripts": {
-    "build": "rd /s /q dist && webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "repository": {
