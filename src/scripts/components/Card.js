@@ -29,25 +29,32 @@ export default class Card {
         return card;
     }
 
-    _likeCard(evt) {
-        evt.target.classList.toggle('element__like_active')
+    _likeCard(card) {
+        const likeBtn = card.querySelector('.element__like');
+        likeBtn.addEventListener('click', (evt) => {
+            evt.target.classList.toggle('element__like_active')
+        });
     }
 
-    setEventListeners(card) {
-        const likeBtn = card.querySelector('.element__like');
-        likeBtn.addEventListener('click', this._likeCard);
-
+    _deleteCard(card) {
         const trashBtn = card.querySelector('.element__trash-btn');
         trashBtn.addEventListener('click', () => {
             const deletedCard = trashBtn.parentElement;
             deletedCard.remove();
         });
+    }
 
-
+    _showImage(card) {
         const cardImage = card.querySelector('.element__image');
         cardImage.addEventListener('click', (evt) => {
             evt.preventDefault();
             this.handleCardClick(this.data);
         })
+    }
+
+    setEventListeners(card) {
+        this._likeCard(card);
+        this._deleteCard(card);
+        this._showImage(card);
     }
 }
