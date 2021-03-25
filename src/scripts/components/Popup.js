@@ -1,3 +1,5 @@
+import { ESC_KEYCODE } from '../utils/constants.js';
+
 export default class Popup {
     constructor(popupSelector) {
         this.popupSelector = popupSelector;
@@ -6,10 +8,6 @@ export default class Popup {
     open() {
         this.popupSelector.classList.add('popup_opened');
         this._handleEscClose();
-        const overlay = this.popupSelector.querySelector('.popup__overlay');
-        overlay.addEventListener('click', () => {
-            this.close(this.popupSelector);
-        })
     }
 
     close() {
@@ -18,15 +16,17 @@ export default class Popup {
 
     _handleEscClose() {
         document.addEventListener('keydown', (evt) => {
-            if (evt.key === 'Escape') {
+            if (evt.key === ESC_KEYCODE) {
                 this.close(this.popupSelector);
             }
         });
     }
 
     setEventListeners() {
-        this.popupSelector.querySelector('.popup__close').addEventListener('click', () => {
-            this.close(this.popupSelector);
+        this.popupSelector.addEventListener('click', (evt) => {
+            if (evt.target.classList.contains('popup__overlay') || evt.target.classList.contains('popup__close')) {
+                this.close(this.popupSelector);
+            }
         })
     }
 }
