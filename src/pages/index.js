@@ -24,6 +24,14 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 
+function createCard() {
+  const card = new Card({ title, image }, "#template-card", () => {
+    imagePreview.open({ title, image });
+  });
+  return card.generateCard(item);
+}
+
+
 
 const popupWithImage = new PopupWithImage(showImagePopup);
 

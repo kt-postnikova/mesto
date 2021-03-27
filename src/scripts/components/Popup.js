@@ -24,7 +24,7 @@ export default class Popup {
 
     setEventListeners() {
         this.popupSelector.addEventListener('click', (evt) => {
-            if (evt.target.classList.contains('popup__overlay') || evt.target.classList.contains('popup__close')) {
+            if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
                 this.close(this.popupSelector);
             }
         })
