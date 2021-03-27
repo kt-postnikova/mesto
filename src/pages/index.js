@@ -70,7 +70,7 @@ const profile = new PopupWithForm({
   submitForm: (item) => {
     const info = new UserInfo({ profileName, profileJob });
     info.setUserInfo(item);
-    profile.close();
+    popupEditProfile.close();
   }
 })
 
