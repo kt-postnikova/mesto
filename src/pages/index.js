@@ -24,11 +24,15 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 
-function createCard() {
-  const card = new Card({ title, image }, "#template-card", () => {
-    imagePreview.open({ title, image });
+function createCard(item) {
+  const card = new Card({
+    data: item,
+    cardSelector: '#template-element',
+    handleCardClick: (imagePopup) => {
+      popupWithImage.open(imagePopup);
+    }
   });
-  return card.generateCard(item);
+  return card.generateCard();
 }
 
 
@@ -38,14 +42,8 @@ const popupWithImage = new PopupWithImage(showImagePopup);
 const defaultCardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    const card = new Card({
-      data: item,
-      cardSelector: '#template-element',
-      handleCardClick: (imagePopup) => {
-        popupWithImage.open(imagePopup);
-      }
-    });
-    const cardElement = card.generateCard();
+
+    const cardElement = createCard(item)
     defaultCardList.setItems(cardElement);
   }
 }, cardContainer);
@@ -58,17 +56,9 @@ const addCard = new PopupWithForm({
   popupSelector: addCardPopup,
   formSelector: formAddCard,
   submitForm: (item) => {
-    const card = new Card({
-      data: item,
-      cardSelector: '#template-element',
-      handleCardClick: (imagePopup) => {
-        popupWithImage.open(imagePopup);
-      }
-    });
-    const cardElement = card.generateCard();
+    const cardElement = createCard(item)
     document.querySelector(cardContainer).prepend(cardElement);
     addCard.close();
-    addCard.clear();
   },
 });
 
