@@ -12,15 +12,17 @@ export default class Api {
     }
 
     getCards() {
-        fetch('https://mesto.nomoreparties.co/v1/cohort-21/cards', {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-21/cards', {
             headers: {
                 authorization: 'b9ddb8ca-c8e3-475f-814b-c43ae8005cc3'
             }
         })
-            .then(res => res.json())
-            .then((result) => {
-                console.log(result);
-            });
+        // .then((res) => {
+        //     return res.json()
+        // })
+        // .then((res) => {
+        //     return res.name;
+        // });
     }
 
     editUserInfo() {
