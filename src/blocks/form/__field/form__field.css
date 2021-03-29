@@ -1,8 +1,16 @@
 .form__field {
     position: relative;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
+    margin-top: 75px;
 }
 
 .form__field:last-of-type {
-    /* margin-top: 5px; */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 978px) {
+    .form__field {
+        margin-top: 54px;
+    }
 }

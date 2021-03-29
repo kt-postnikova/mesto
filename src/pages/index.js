@@ -109,9 +109,14 @@ formList.forEach(form => {
 
 const deleteBtn = document.querySelector('.element__trash-btn');
 const popupConfirmDelete = document.querySelector('.popup_type_confirm-delete');
+const closeConfirm = popupConfirmDelete.querySelector('.popup__close');
 const confirmDelete = new Popup(popupConfirmDelete);
 
 
 deleteBtn.addEventListener('click', () => {
   confirmDelete.open();
+});
+
+closeConfirm.addEventListener('click', () => {
+  confirmDelete.close();
 })
