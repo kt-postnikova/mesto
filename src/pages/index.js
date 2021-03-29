@@ -27,9 +27,9 @@ import Api from '../scripts/components/Api.js';
 
 const api = new Api();
 //api.getUserInfo();
-api.getCards();
+//api.getCards();
 //api.editUserInfo();
-api.addNewCard();
+//api.addNewCard();
 
 
 function createCard(item) {

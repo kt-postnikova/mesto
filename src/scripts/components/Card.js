@@ -30,9 +30,11 @@ export default class Card {
     }
 
     _likeCard(card) {
-        const likeBtn = card.querySelector('.element__like');
+        // const likeBtn = card.querySelector('.element__like');
+        const likeBtn = card.querySelector('.like__button');
         likeBtn.addEventListener('click', (evt) => {
-            evt.target.classList.toggle('element__like_active')
+            // evt.target.classList.toggle('element__like_active')
+            evt.target.classList.toggle('like__button_active')
         });
     }
 
