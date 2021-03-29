@@ -43,8 +43,6 @@ function createCard(item) {
   return card.generateCard();
 }
 
-
-
 const popupWithImage = new PopupWithImage(showImagePopup);
 
 const defaultCardList = new Section({
@@ -105,4 +103,15 @@ const formList = Array.from(document.querySelectorAll(validation['formSelector']
 formList.forEach(form => {
   const valid = new FormValidator(form);
   valid.enableValidation();
+})
+
+
+
+const deleteBtn = document.querySelector('.element__trash-btn');
+const popupConfirmDelete = document.querySelector('.popup_type_confirm-delete');
+const confirmDelete = new Popup(popupConfirmDelete);
+
+
+deleteBtn.addEventListener('click', () => {
+  confirmDelete.open();
 })
