@@ -3,7 +3,6 @@ import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import Popup from '../scripts/components/Popup.js';
 import {
-  initialCards,
   inputName,
   inputJob,
   profileName,
@@ -32,6 +31,7 @@ const api = new Api();
 //api.addNewCard();
 
 
+
 function createCard(item) {
   const card = new Card({
     data: item,
@@ -45,16 +45,25 @@ function createCard(item) {
 
 const popupWithImage = new PopupWithImage(showImagePopup);
 
-const defaultCardList = new Section({
-  data: initialCards,
-  renderer: (item) => {
 
-    const cardElement = createCard(item)
-    defaultCardList.setItems(cardElement);
-  }
-}, cardContainer);
+api.getCards()
+  .then((res) => {
+    return res.json()
+  })
+  .then((res) => {
+    const defaultCardList = new Section({
+      data: res,
+      renderer: (item) => {
+        console.log(item);
+        const cardElement = createCard(item)
+        defaultCardList.setItems(cardElement);
+      }
+    }, cardContainer);
 
-defaultCardList.renderItems();
+    defaultCardList.renderItems();
+  });
+
+
 
 const popupEditProfile = new Popup(editPopup);
 
