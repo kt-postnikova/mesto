@@ -40,11 +40,11 @@ export default class Card {
         likeBtn.addEventListener('click', (evt) => {
             evt.target.classList.toggle('like__button_active')
             if (likeBtn.classList.contains('like__button_active')) {
-                this.api.addLikeCard(this.data._id).then(res => {
+                this.api.putLike(this.data._id).then(res => {
                     this._likeCounter(card, res.likes.length);
                 })
             } else {
-                this.api.deleteLikeCard(this.data._id).then(res => {
+                this.api.removeLike(this.data._id).then(res => {
                     this._likeCounter(card, res.likes.length);
                 })
             };
