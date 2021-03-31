@@ -1,8 +1,9 @@
 export default class Card {
-    constructor({ data, cardSelector, handleCardClick }) {
+    constructor({ data, cardSelector, handleCardClick, api }) {
         this.data = data;
         this.handleCardClick = handleCardClick;
         this.cardSelector = cardSelector;
+        this.api = api;
     }
 
     _getTemplate() {
@@ -25,14 +26,28 @@ export default class Card {
         cardImage.alt = this.data.name;
         cardTitle.textContent = this.data.name;
 
-
+        this._likeCounter(card, this.data.likes.length)
         return card;
+    }
+
+    _likeCounter(card, count) {
+        const counter = card.querySelector('.like__counter')
+        counter.textContent = count;
     }
 
     _likeCard(card) {
         const likeBtn = card.querySelector('.like__button');
         likeBtn.addEventListener('click', (evt) => {
             evt.target.classList.toggle('like__button_active')
+            if (likeBtn.classList.contains('like__button_active')) {
+                this.api.addLikeCard(this.data._id).then(res => {
+                    this._likeCounter(card, res.likes.length);
+                })
+            } else {
+                this.api.deleteLikeCard(this.data._id).then(res => {
+                    this._likeCounter(card, res.likes.length);
+                })
+            };
         });
     }
 
