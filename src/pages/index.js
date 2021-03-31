@@ -3,6 +3,7 @@ import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import Popup from '../scripts/components/Popup.js';
 import {
+  initialCards,
   inputName,
   inputJob,
   profileName,
@@ -24,9 +25,16 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 
-const api = new Api();
-//api.getUserInfo();
-//api.getCards();
+const options = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-21',
+  headers: {
+    authorization: 'b9ddb8ca-c8e3-475f-814b-c43ae8005cc3',
+  },
+}
+
+const api = new Api(options);
+
+
 //api.editUserInfo();
 //api.addNewCard();
 
@@ -38,30 +46,34 @@ function createCard(item) {
     cardSelector: '#template-element',
     handleCardClick: (imagePopup) => {
       popupWithImage.open(imagePopup);
-    }
+    },
+    api
   });
   return card.generateCard();
 }
 
+
 const popupWithImage = new PopupWithImage(showImagePopup);
 
 
-api.getCards()
-  .then((res) => {
-    return res.json()
-  })
-  .then((res) => {
-    const defaultCardList = new Section({
-      data: res,
-      renderer: (item) => {
-        console.log(item);
-        const cardElement = createCard(item)
-        defaultCardList.setItems(cardElement);
-      }
-    }, cardContainer);
+const defaultCardList = new Section({
+  //data: initialCards,
+  renderer: (item) => {
+    const cardElement = createCard(item);
+    defaultCardList.setItems(cardElement);
+  }
+}, cardContainer);
 
-    defaultCardList.renderItems();
-  });
+// defaultCardList.renderItems();
+
+
+api.getCards()
+  .then(res => {
+    //console.log(res);
+    defaultCardList.renderItems(res);
+    return res
+  })
+
 
 
 
@@ -78,6 +90,14 @@ const addCard = new PopupWithForm({
 });
 
 const userInfo = new UserInfo({ profileName, profileJob });
+
+api.getUserInfo()
+  .then(res => {
+    // profileName.textContent = res.name;
+    // profileJob.textContent = res.about;
+    console.log(res);
+    userInfo.setUserInfo(res)
+  })
 
 const profile = new PopupWithForm({
   popupSelector: editPopup,
