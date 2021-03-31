@@ -17,6 +17,24 @@ export default class Api {
             .catch(err => Promise.reject(err))
     }
 
+    createCard(data) {
+        return fetch(`${this.url}/cards`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify({
+                name: data.name,
+                link: data.link
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+            })
+            .catch(err => Promise.reject(err))
+    }
+
     putLike(cardId) {
         return fetch(`${this.url}/cards/likes/${cardId}`, {
             method: 'PUT',
