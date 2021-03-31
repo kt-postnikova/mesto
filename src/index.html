@@ -18,9 +18,9 @@
             <div class="profile__block">
                 <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватар пользователя">
                 <div class="profile__info">
-                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <h1 class="profile__name"></h1>
                     <button class="profile__button" type="button" aria-label="Редактировать профиль"></button>
-                    <p class="profile__job">Исследователь океана</p>
+                    <p class="profile__job"></p>
                 </div>
             </div>
             <button class="profile__add-button"><img src="<%=require('./images/add-button.svg')%>" alt="Создать"
@@ -43,8 +43,8 @@
                     <span class="form__error name-input-error"></span>
                 </label>
                 <label class="form__field">
-                    <input id="job-input" class="form__input form__input_type_job" name="job" type="text" minlength="2"
-                        maxlength="200" required>
+                    <input id="about-input" class="form__input form__input_type_job" name="about" type="text"
+                        minlength="2" maxlength="200" required>
                     <span class="form__error job-input-error"></span>
                 </label>
                 <button class="form__button" type="submit">Сохранить</button>

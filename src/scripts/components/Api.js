@@ -5,7 +5,7 @@ export default class Api {
     }
 
     getCards() {
-        return fetch(this.url + '/cards', {
+        return fetch(`${this.url}/cards`, {
             headers: this.headers,
         })
             .then(res => {
@@ -57,5 +57,21 @@ export default class Api {
             .catch(err => Promise.reject(err))
     }
 
-
+    editUserInfo(data) {
+        return fetch(`${this.url}/users/me`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify({
+                name: data.name,
+                about: data.about
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+            })
+            .catch(err => Promise.reject(err))
+    }
 }

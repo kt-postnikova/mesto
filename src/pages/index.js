@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import Card from '../scripts/components/Card.js';
-import FormValidator from '../scripts/components/FormValidator.js';
+//import FormValidator from '../scripts/components/FormValidator.js';
 import Popup from '../scripts/components/Popup.js';
 import {
   initialCards,
@@ -29,6 +29,7 @@ const options = {
   url: 'https://mesto.nomoreparties.co/v1/cohort-21',
   headers: {
     authorization: 'b9ddb8ca-c8e3-475f-814b-c43ae8005cc3',
+    'Content-Type': 'application/json'
   },
 }
 
@@ -75,8 +76,6 @@ api.getCards()
   })
 
 
-
-
 const popupEditProfile = new Popup(editPopup);
 
 const addCard = new PopupWithForm({
@@ -89,25 +88,41 @@ const addCard = new PopupWithForm({
   },
 });
 
-const userInfo = new UserInfo({ profileName, profileJob });
+// экземпляр объекта
+const userInfo = new UserInfo({ profileName, profileJob }, api);
 
 api.getUserInfo()
   .then(res => {
-    // profileName.textContent = res.name;
-    // profileJob.textContent = res.about;
-    console.log(res);
-    userInfo.setUserInfo(res)
+
+    profileName.textContent = res.name;
+    profileJob.textContent = res.about;
+
+
+    userInfo.getUserInfo(res);
+    //userInfo.setUserInfo(res);
+
   })
+
+
 
 const profile = new PopupWithForm({
   popupSelector: editPopup,
   formSelector: formEditProfile,
   submitForm: (item) => {
-    const info = new UserInfo({ profileName, profileJob });
+    const info = new UserInfo({ profileName, profileJob }, api);
     info.setUserInfo(item);
     popupEditProfile.close();
+
+    api.editUserInfo(item)
+      .then(res => {
+        res.name = item.name;
+        res.about = item.about;
+      })
   }
 })
+
+
+
 
 popupWithImage.setEventListeners();
 popupEditProfile.setEventListeners();
@@ -127,12 +142,12 @@ closeAddCard.addEventListener('click', function () {
   addCard.close();
 })
 
-const formList = Array.from(document.querySelectorAll(validation['formSelector']));
+// const formList = Array.from(document.querySelectorAll(validation['formSelector']));
 
-formList.forEach(form => {
-  const valid = new FormValidator(form);
-  valid.enableValidation();
-})
+// formList.forEach(form => {
+//   const valid = new FormValidator(form);
+//   valid.enableValidation();
+// })
 
 
 
