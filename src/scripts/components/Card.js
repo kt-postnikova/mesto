@@ -26,7 +26,7 @@ export default class Card {
         cardImage.alt = this.data.name;
         cardTitle.textContent = this.data.name;
 
-        this._likeCounter(card, this.data.likes.length)
+        //this._likeCounter(card, this.data.likes.length)
         return card;
     }
 
