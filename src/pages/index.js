@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import Card from '../scripts/components/Card.js';
-//import FormValidator from '../scripts/components/FormValidator.js';
+import FormValidator from '../scripts/components/FormValidator.js';
 import Popup from '../scripts/components/Popup.js';
 import {
   initialCards,
@@ -83,8 +83,13 @@ const addCard = new PopupWithForm({
   formSelector: formAddCard,
   submitForm: (item) => {
     const cardElement = createCard(item)
+    api.createCard(item)
+      .then(res => {
+        console.log(res);
+      })
     document.querySelector(cardContainer).prepend(cardElement);
     addCard.close();
+
   },
 });
 
@@ -97,10 +102,8 @@ api.getUserInfo()
     profileName.textContent = res.name;
     profileJob.textContent = res.about;
 
-
     userInfo.getUserInfo(res);
     //userInfo.setUserInfo(res);
-
   })
 
 
@@ -142,12 +145,12 @@ closeAddCard.addEventListener('click', function () {
   addCard.close();
 })
 
-// const formList = Array.from(document.querySelectorAll(validation['formSelector']));
+const formList = Array.from(document.querySelectorAll(validation['formSelector']));
 
-// formList.forEach(form => {
-//   const valid = new FormValidator(form);
-//   valid.enableValidation();
-// })
+formList.forEach(form => {
+  const valid = new FormValidator(form);
+  valid.enableValidation();
+})
 
 
 
