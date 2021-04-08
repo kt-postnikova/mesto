@@ -5,18 +5,28 @@ import Popup from '../scripts/components/Popup.js';
 import {
   inputName,
   inputJob,
+  inputAvatar,
   profileName,
   profileJob,
   editPopup,
   profileButton,
   formEditProfile,
+  formEditAvatar,
   addCardButton,
+  confirmationButton,
   addCardPopup,
+  confirmDeletePopup,
+  editAvatarPopup,
+  avatarImage,
   closeAddCard,
+  closeConfirm,
+  closeEditAvatar,
   showImagePopup,
   cardContainer,
   formAddCard,
-  validation
+  avatarButton,
+  validation,
+  options
 } from '../scripts/utils/constants.js';
 import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
@@ -24,75 +34,133 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 
-const api = new Api();
-//api.getUserInfo();
-//api.getCards();
-//api.editUserInfo();
-//api.addNewCard();
+const api = new Api(options);
+const popupWithImage = new PopupWithImage(showImagePopup);
+const popupEditProfile = new Popup(editPopup);
+const userInfo = new UserInfo({ profileName, profileJob }, api);
+const confirmDelete = new Popup(confirmDeletePopup);
 
+let userId;
+
+api.getUserInfo()
+  .then(res => {
+
+    profileName.textContent = res.name;
+    profileJob.textContent = res.about;
+
+    userId = res._id;
+    userInfo.getUserInfo(res);
+  })
+
+
+api.getUserInfo()
+  .then(res => {
+    avatarImage.src = res.avatar;
+  })
+
+
+function setLoader(form) {
+  const formButton = form.querySelector('.form__button');
+  formButton.innerHTML = 'Сохранение...';
+}
 
 
 function createCard(item) {
   const card = new Card({
     data: item,
+    userId: userId,
     cardSelector: '#template-element',
     handleCardClick: (imagePopup) => {
       popupWithImage.open(imagePopup);
+    },
+    api,
+    confirm: (card) => {
+      confirmDelete.open();
+      confirmationButton.addEventListener('click', () => {
+        api.deleteCard(item._id)
+          .then(() => {
+            card.remove();
+            confirmDelete.close();
+          })
+      })
+
     }
   });
   return card.generateCard();
 }
 
-const popupWithImage = new PopupWithImage(showImagePopup);
+
+const defaultCardList = new Section({
+  renderer: (item) => {
+    const cardElement = createCard(item);
+    defaultCardList.setItems(cardElement);
+  }
+}, cardContainer);
 
 
 api.getCards()
-  .then((res) => {
-    return res.json()
+  .then(res => {
+    defaultCardList.renderItems(res);
   })
-  .then((res) => {
-    const defaultCardList = new Section({
-      data: res,
-      renderer: (item) => {
-        console.log(item);
-        const cardElement = createCard(item)
-        defaultCardList.setItems(cardElement);
-      }
-    }, cardContainer);
 
-    defaultCardList.renderItems();
-  });
-
-
-
-const popupEditProfile = new Popup(editPopup);
 
 const addCard = new PopupWithForm({
   popupSelector: addCardPopup,
   formSelector: formAddCard,
   submitForm: (item) => {
-    const cardElement = createCard(item)
-    document.querySelector(cardContainer).prepend(cardElement);
-    addCard.close();
+    api.createCard(item)
+      .then(res => {
+        const cardElement = createCard(res);
+        document.querySelector(cardContainer).prepend(cardElement);
+        addCard.close();
+      })
+      .then(() => {
+        setLoader(formAddCard);
+      })
   },
 });
 
-const userInfo = new UserInfo({ profileName, profileJob });
 
 const profile = new PopupWithForm({
   popupSelector: editPopup,
   formSelector: formEditProfile,
   submitForm: (item) => {
-    const info = new UserInfo({ profileName, profileJob });
+    const info = new UserInfo({ profileName, profileJob }, api);
     info.setUserInfo(item);
     popupEditProfile.close();
+    setLoader(formEditProfile);
+
+    api.editUserInfo(item)
+      .then(res => {
+        res.name = item.name;
+        res.about = item.about;
+      })
   }
 })
+
+
+const avatar = new PopupWithForm({
+  popupSelector: editAvatarPopup,
+  formSelector: formEditAvatar,
+  submitForm: (item) => {
+    api.editAvatar(item)
+      .then(res => {
+        avatarImage.src = res.avatar
+        avatar.close();
+      })
+      .then(() => {
+        setLoader(formEditAvatar);
+      })
+  }
+})
+
 
 popupWithImage.setEventListeners();
 popupEditProfile.setEventListeners();
 profile.setEventListeners();
 addCard.setEventListeners();
+avatar.setEventListeners();
+
 
 profileButton.addEventListener('click', function () {
   popupEditProfile.open();
@@ -107,6 +175,21 @@ closeAddCard.addEventListener('click', function () {
   addCard.close();
 })
 
+closeConfirm.addEventListener('click', () => {
+  confirmDelete.close();
+})
+
+closeEditAvatar.addEventListener('click', () => {
+  avatar.close();
+})
+
+avatarButton.addEventListener('click', () => {
+  avatar.open();
+
+  inputAvatar.value = avatarImage.src;
+})
+
+
 const formList = Array.from(document.querySelectorAll(validation['formSelector']));
 
 formList.forEach(form => {
@@ -116,16 +199,4 @@ formList.forEach(form => {
 
 
 
-const deleteBtn = document.querySelector('.element__trash-btn');
-const popupConfirmDelete = document.querySelector('.popup_type_confirm-delete');
-const closeConfirm = popupConfirmDelete.querySelector('.popup__close');
-const confirmDelete = new Popup(popupConfirmDelete);
 
-
-deleteBtn.addEventListener('click', () => {
-  confirmDelete.open();
-});
-
-closeConfirm.addEventListener('click', () => {
-  confirmDelete.close();
-})

@@ -1,4 +1,5 @@
 .profile__block {
+    position: relative;
     display: flex;
 }
 
