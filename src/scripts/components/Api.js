@@ -61,9 +61,21 @@ export default class Api {
             .catch(err => Promise.reject(err))
     }
 
+    deleteCard(cardId) {
+        return fetch(`${this.url}/cards/${cardId}`, {
+            method: 'DELETE',
+            headers: this.headers,
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+        })
+            .catch(err => Promise.reject(err))
+    }
 
     getUserInfo() {
-        return fetch(`${this.url}/users/me/`, {
+        return fetch(`${this.url}/users/me`, {
             headers: this.headers,
         })
             .then(res => {
@@ -82,6 +94,23 @@ export default class Api {
             body: JSON.stringify({
                 name: data.name,
                 about: data.about
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+            })
+            .catch(err => Promise.reject(err))
+    }
+
+    editAvatar(data) {
+        return fetch(`${this.url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify({
+                avatar: data.link
             })
         })
             .then(res => {

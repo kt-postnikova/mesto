@@ -16,7 +16,10 @@
     <main class="content page__content">
         <section class="profile content__profile">
             <div class="profile__block">
-                <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватар пользователя">
+                <div class="avatar">
+                    <div class="avatar__overlay"></div>
+                    <img class="avatar__image" src="" alt="Аватар пользователя">
+                </div>
                 <div class="profile__info">
                     <h1 class="profile__name"></h1>
                     <button class="profile__button" type="button" aria-label="Редактировать профиль"></button>
@@ -42,7 +45,7 @@
                         minlength="2" maxlength="40" required>
                     <span class="form__error name-input-error"></span>
                 </label>
-                <label class="form__field">
+                <label class="form__field form__field_under">
                     <input id="about-input" class="form__input form__input_type_job" name="about" type="text"
                         minlength="2" maxlength="200" required>
                     <span class="form__error about-input-error"></span>
@@ -61,7 +64,7 @@
                         placeholder="Название" minlength="2" maxlength="30" required>
                     <span class="form__error title-input-error"></span>
                 </label>
-                <label class="form__field">
+                <label class="form__field form__field_under">
                     <input id="link-input" class="form__input form__input_type_link" name="link" type="url"
                         placeholder="Ссылка на картинку" required>
                     <span class="form__error link-input-error"></span>
@@ -80,12 +83,28 @@
         </figure>
     </div>
 
+
     <div class="popup popup_type_confirm-delete">
         <div class="popup__container">
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
             <form class="form">
-                <h2 class="form__header">Вы уверены?</h2>
+                <h2 class="form__header form__header_confirm-delete">Вы уверены?</h2>
                 <button class="form__button">Да</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_edit-avatar">
+        <div class="popup__container">
+            <button class="popup__close" type="button" aria-label="Закрыть"></button>
+            <form class="form" name="formEditAvatar" novalidate>
+                <h2 class="form__header">Обновить аватар</h2>
+                <label class="form__field form__field_under">
+                    <input id="avatar-input" class="form__input form__input_type_avatar" name="link" type="url"
+                        required>
+                    <span class="form__error avatar-input-error"></span>
+                </label>
+                <button class="form__button" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
@@ -104,7 +123,6 @@
             </div>
         </article>
     </template>
-
 </body>
 
 </html>

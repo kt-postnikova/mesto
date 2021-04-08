@@ -1,9 +1,12 @@
 export default class Card {
-    constructor({ data, cardSelector, handleCardClick, api }) {
+    constructor({ data, cardSelector, handleCardClick, api, userId, confirm }) {
         this.data = data;
         this.handleCardClick = handleCardClick;
         this.cardSelector = cardSelector;
         this.api = api;
+        this.userId = userId;
+
+        this.confirm = confirm;
     }
 
     _getTemplate() {
@@ -26,8 +29,17 @@ export default class Card {
         cardImage.alt = this.data.name;
         cardTitle.textContent = this.data.name;
 
-        //this._likeCounter(card, this.data.likes.length)
+        this._showTrashBtn(card)
+        this._likeCounter(card, this.data.likes.length)
         return card;
+    }
+
+    _showTrashBtn(card) {
+        const trashBtn = card.querySelector('.element__trash-btn')
+        const userIdFromResponse = this.data.owner._id;
+        if (userIdFromResponse != this.userId) {
+            trashBtn.setAttribute('style', 'display:none');
+        }
     }
 
     _likeCounter(card, count) {
@@ -54,8 +66,7 @@ export default class Card {
     _deleteCard(card) {
         const trashBtn = card.querySelector('.element__trash-btn');
         trashBtn.addEventListener('click', () => {
-            const deletedCard = trashBtn.parentElement;
-            deletedCard.remove();
+            this.confirm(card);
         });
     }
 
