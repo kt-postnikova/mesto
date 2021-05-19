@@ -23,7 +23,7 @@
                 <div class="profile__info">
                     <h1 class="profile__name"></h1>
                     <button class="profile__button" type="button" aria-label="Редактировать профиль"></button>
-                    <p class="profile__job"></p>
+                    <p class="profile__about"></p>
                 </div>
             </div>
             <button class="profile__add-button"><img src="<%=require('./images/add-button.svg')%>" alt="Создать"
@@ -35,7 +35,7 @@
     <footer class="footer page__footer">
         <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup popup_type_edit-profile">
+    <div class="popup popup_user-info">
         <div class="popup__container">
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
             <form class="form" name="formEditProfile" novalidate>
@@ -45,8 +45,8 @@
                         minlength="2" maxlength="40" required>
                     <span class="form__error name-input-error"></span>
                 </label>
-                <label class="form__field form__field_under">
-                    <input id="about-input" class="form__input form__input_type_job" name="about" type="text"
+                <label class="form__field">
+                    <input id="about-input" class="form__input form__input_type_about" name="about" type="text"
                         minlength="2" maxlength="200" required>
                     <span class="form__error about-input-error"></span>
                 </label>
@@ -54,28 +54,27 @@
             </form>
         </div>
     </div>
-    <div class="popup popup_type_add-place">
+    <div class="popup popup_add-card">
         <div class="popup__container">
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
-            <form class="form" name="formAddPlace" novalidate>
+            <form class="form form_type_add-place" name="formAddPlace" novalidate>
                 <h2 class="form__header form__header_type_add-place">Новое место</h2>
                 <label class="form__field">
-                    <input id="title-input" class="form__input form__input_type_title" name="name" type="text"
-                        placeholder="Название" minlength="2" maxlength="30" required>
-                    <span class="form__error title-input-error"></span>
+                    <input id="name-input" class="form__input form__input_type_title" name="name" type="text"
+                        placeholder="Название" minlength="1" maxlength="30" required>
+                    <span class="form__error name-input-error"></span>
                 </label>
-                <label class="form__field form__field_under">
+                <label class="form__field">
                     <input id="link-input" class="form__input form__input_type_link" name="link" type="url"
                         placeholder="Ссылка на картинку" required>
                     <span class="form__error link-input-error"></span>
                 </label>
-                <button class="form__button form__button_type_add-place form__button_inactive"
-                    type="submit">Создать</button>
+                <button class="form__button form__button_type_add-place" type="submit">Создать</button>
             </form>
         </div>
     </div>
 
-    <div class="popup popup_type_show-image">
+    <div class="popup popup_show-image">
         <figure class="popup__block">
             <button class="popup__close popup__close_type_show-image" type="button" aria-label="Закрыть"></button>
             <img class="popup__image" alt=" " src="#">
@@ -83,18 +82,17 @@
         </figure>
     </div>
 
-
-    <div class="popup popup_type_confirm-delete">
+    <div class="popup popup_delete-card">
         <div class="popup__container">
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
-            <form class="form">
+            <form class="form form_type_delete-card" name='formDeleteCard' novalidate>
                 <h2 class="form__header form__header_confirm-delete">Вы уверены?</h2>
-                <button class="form__button">Да</button>
+                <button class="form__button" type="submit">Да</button>
             </form>
         </div>
     </div>
 
-    <div class="popup popup_type_edit-avatar">
+    <div class="popup popup_edit-avatar">
         <div class="popup__container">
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
             <form class="form" name="formEditAvatar" novalidate>
@@ -119,10 +117,10 @@
                     <button class="like__button" type="button" aria-label="Нравится"></button>
                     <span class="like__counter"></span>
                 </div>
-
             </div>
         </article>
     </template>
+
 </body>
 
 </html>
