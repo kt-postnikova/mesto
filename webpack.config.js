@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     entry: { main: './src/pages/index.js' },
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
         publicPath: ''
     },
@@ -14,7 +14,7 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
         compress: true,
-        port: 8080,
+        port: 8081,
         open: true
     },
     module: {
@@ -35,7 +35,7 @@ module.exports = {
                     options: { importLoaders: 1 }
                 },
                     'postcss-loader']
-            }
+            },
         ]
     },
     plugins: [

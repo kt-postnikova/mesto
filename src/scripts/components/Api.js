@@ -1,124 +1,127 @@
 export default class Api {
-    constructor(config) {
-        this.url = config.url;
-        this.headers = config.headers;
+    constructor(options) {
+        this.baseUrl = options.baseUrl;
+        this.headers = options.headers;
     }
 
     getCards() {
-        return fetch(`${this.url}/cards`, {
+        return fetch(`${this.baseUrl}` + '/cards', {
             headers: this.headers,
         })
             .then(res => {
                 if (res.ok) {
                     return res.json();
                 }
-                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+
+                return Promise.reject(`Ошибка: ${res.status}`);
             })
-            .catch(err => Promise.reject(err))
     }
 
-    createCard(data) {
-        return fetch(`${this.url}/cards`, {
+    createCard(inputValues) {
+        return fetch(`${this.baseUrl}` + '/cards', {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
-                name: data.name,
-                link: data.link
+                name: inputValues.name,
+                link: inputValues.link
             })
         })
             .then(res => {
                 if (res.ok) {
                     return res.json();
                 }
-                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+
+                return Promise.reject(`Ошибка: ${res.status}`);
             })
-            .catch(err => Promise.reject(err))
-    }
-
-    putLike(cardId) {
-        return fetch(`${this.url}/cards/likes/${cardId}`, {
-            method: 'PUT',
-            headers: this.headers,
-        }).then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
-        })
-            .catch(err => Promise.reject(err))
-    }
-
-    removeLike(cardId) {
-        return fetch(`${this.url}/cards/likes/${cardId}`, {
-            method: 'DELETE',
-            headers: this.headers,
-        }).then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
-        })
-            .catch(err => Promise.reject(err))
     }
 
     deleteCard(cardId) {
-        return fetch(`${this.url}/cards/${cardId}`, {
+        return fetch(`${this.baseUrl}` + '/cards/' + `${cardId}`, {
             method: 'DELETE',
             headers: this.headers,
-        }).then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
         })
-            .catch(err => Promise.reject(err))
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+
+                return Promise.reject(`Ошибка: ${res.status}`)
+            })
+    }
+
+    putLike(cardId) {
+        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+            method: 'PUT',
+            headers: this.headers,
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+
+                return Promise.reject(`Ошибка: ${res.status}`)
+            })
+    }
+
+    deleteLike(cardId) {
+        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
+            method: 'DELETE',
+            headers: this.headers,
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+
+                return Promise.reject(`Ошибка: ${res.status}`)
+            })
     }
 
     getUserInfo() {
-        return fetch(`${this.url}/users/me`, {
-            headers: this.headers,
+        return fetch(`${this.baseUrl}` + '/users/me', {
+            headers: this.headers
         })
             .then(res => {
                 if (res.ok) {
                     return res.json();
                 }
-                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+
+                return Promise.reject(`Ошибка: ${res.status}`);
             })
-            .catch(err => Promise.reject(err))
     }
 
-    editUserInfo(data) {
-        return fetch(`${this.url}/users/me`, {
+    editUserInfo(inputValues) {
+        return fetch(`${this.baseUrl}` + '/users/me', {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
-                name: data.name,
-                about: data.about
+                name: inputValues.name,
+                about: inputValues.about
             })
         })
             .then(res => {
                 if (res.ok) {
                     return res.json();
                 }
-                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+
+                return Promise.reject(`Ошибка: ${res.status}`);
             })
-            .catch(err => Promise.reject(err))
     }
 
-    editAvatar(data) {
-        return fetch(`${this.url}/users/me/avatar`, {
+    editAvatar(inputValues) {
+        return fetch(`${this.baseUrl}` + '/users/me/avatar', {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
-                avatar: data.link
+                avatar: inputValues.link
             })
         })
             .then(res => {
                 if (res.ok) {
                     return res.json();
                 }
-                return Promise.reject(new Error(`Произошла ошибка с кодом ${res.status}`));
+
+                return Promise.reject(`Ошибка: ${res.status}`)
             })
-            .catch(err => Promise.reject(err))
     }
 }

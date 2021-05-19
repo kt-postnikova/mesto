@@ -1,80 +1,44 @@
-export const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+/* Popups */
+export const POPUP_USER_INFO = document.querySelector('.popup_user-info');
+export const POPUP_ADD_CARD = document.querySelector('.popup_add-card');
+export const POPUP_SHOW_IMAGE = document.querySelector('.popup_show-image');
+export const POPUP_DELETE_CARD = document.querySelector('.popup_delete-card');
+export const POPUP_EDIT_AVATAR = document.querySelector('.popup_edit-avatar');
+export const POPUP_IMAGE = POPUP_SHOW_IMAGE.querySelector('.popup__image');
+export const POPUP_CAPTION = POPUP_SHOW_IMAGE.querySelector('.popup__caption');
 
-export const validation = {
+/* Buttons */
+export const BUTTON_USER_INFO = document.querySelector('.profile__button');
+export const BUTTON_ADD_CARD = document.querySelector('.profile__add-button');
+export const BUTTON_EDIT_AVATAR = document.querySelector('.avatar__overlay');
+
+/* Elements */
+export const PROFILE_NAME = document.querySelector('.profile__name');
+export const PROFILE_ABOUT = document.querySelector('.profile__about');
+export const PROFILE_AVATAR = document.querySelector('.avatar__image');
+export const CARD_CONTAINER = '.elements';
+export const CARD_TEMPLATE = document.querySelector('#template-element');
+
+/* Forms */
+export const FORM_USER_INFO = POPUP_USER_INFO.querySelector('.form');
+export const FORM_ADD_CARD = POPUP_ADD_CARD.querySelector('.form');
+export const FORM_DELETE_CARD = POPUP_DELETE_CARD.querySelector('form');
+export const FORM_EDIT_AVATAR = POPUP_EDIT_AVATAR.querySelector('.form');
+
+/* Inputs */
+export const INPUT_NAME = FORM_USER_INFO.querySelector('.form__input_type_name');
+export const INPUT_ABOUT = FORM_USER_INFO.querySelector('.form__input_type_about');
+export const INPUT_TITLE = FORM_ADD_CARD.querySelector('.form__input_type_title');
+export const INPUT_LINK = FORM_ADD_CARD.querySelector('.form__input_type_link');
+export const INPUT_AVATAR = FORM_EDIT_AVATAR.querySelector('.form__input_type_avatar');
+
+export const ESC_KEYCODE = 'Escape';
+
+export const VALIDATION = {
     formSelector: '.form',
     inputSelector: '.form__input',
     buttonSelector: '.form__button',
     inactiveButton: 'form__button_inactive',
     inputError: 'form__input_error-line',
-    errorMessage: 'form__input_error-message'
+    errorMessageStyle: 'form__input_error-message'
 }
-
-export const options = {
-    url: 'https://mesto.nomoreparties.co/v1/cohort-21',
-    headers: {
-        authorization: 'b9ddb8ca-c8e3-475f-814b-c43ae8005cc3',
-        'Content-Type': 'application/json'
-    },
-}
-
-
-export const editPopup = document.querySelector('.popup_type_edit-profile');
-export const addCardPopup = document.querySelector('.popup_type_add-place');
-export const showImagePopup = document.querySelector('.popup_type_show-image');
-export const editAvatarPopup = document.querySelector('.popup_type_edit-avatar');
-export const confirmDeletePopup = document.querySelector('.popup_type_confirm-delete');
-
-export const profileButton = document.querySelector('.profile__button');
-export const addCardButton = document.querySelector('.profile__add-button');
-export const avatarButton = document.querySelector('.avatar__overlay');
-export const confirmationButton = confirmDeletePopup.querySelector('.form__button');
-
-export const closeEdit = editPopup.querySelector('.popup__close');
-export const closeAddCard = addCardPopup.querySelector('.popup__close');
-export const closeShowImage = showImagePopup.querySelector('.popup__close');
-export const closeConfirm = confirmDeletePopup.querySelector('.popup__close');
-export const closeEditAvatar = editAvatarPopup.querySelector('.popup__close');
-
-export const profileName = document.querySelector('.profile__name');
-export const profileJob = document.querySelector('.profile__job');
-
-export const inputName = editPopup.querySelector('.form__input_type_name');
-export const inputJob = editPopup.querySelector('.form__input_type_job');
-export const inputCardName = addCardPopup.querySelector('.form__input_type_title');
-export const inputCardLink = addCardPopup.querySelector('.form__input_type_link');
-
-export const formEditProfile = editPopup.querySelector('.form');
-export const formAddCard = addCardPopup.querySelector('.form');
-export const formEditAvatar = editAvatarPopup.querySelector('.form')
-
-export const avatarImage = document.querySelector('.avatar__image');
-export const inputAvatar = editAvatarPopup.querySelector('.form__input_type_avatar');
-
-export const cardContainer = '.elements';
-
-export const ESC_KEYCODE = 'Escape';
