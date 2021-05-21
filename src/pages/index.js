@@ -51,17 +51,10 @@ const avatarValidator = new FormValidator(validation, formEditAvatar)
 let userData;
 
 
-/* Получает актуальные данные с сервера о пользователе (name, about, avatar) и отображает на странице
-при загрузке
-+ записывет в переменную id пользователя */
 api.getUserInfo()
   .then(userInfo => {
-    profileAvatar.src = userInfo.avatar;
-    profileName.textContent = userInfo.name;
-    profileAbout.textContent = userInfo.about;
-    return userInfo
-  })
-  .then(userInfo => {
+    getUserInfo.setUserInfo(userInfo);
+    getUserInfo.setAvatar(userInfo);
     userData = userInfo._id
   })
   .catch(err => {
@@ -69,48 +62,45 @@ api.getUserInfo()
   });
 
 
-/* Создаёт экземпляр класса для редактирования инфо о пользователе. Объявляется классс PopupWithForm
-с колбеком сабмита формы. При вызове сабмита будет сделан запрос к серверу на редактирование инфо.
-В нём создаётся экземпляр класса UserInfo. Вызовется его метод setUserInfo(), который добавит изменения на страницу */
 const editUserInfo = new PopupWithForm(popupUserInfo, formUserInfo, {
   submitForm: (inputsValues) => {
     setLoading(true, formUserInfo);
     api.editUserInfo(inputsValues)
       .then(() => {
-        const userInfo = new UserInfo(profileName, profileAbout);
-        userInfo.setUserInfo(inputsValues);
+        //const userInfo = new UserInfo(profileName, profileAbout);
+        getUserInfo.setUserInfo(inputsValues);
         editUserInfo.close();
       })
       .catch(err => {
         console.log(err)
-      });
+      })
+      .finally(() => {
+        setLoading(false, formUserInfo, 'Сохранить')
+      })
   }
 })
 
 
-/* Создаёт экземпляр класса для редактирования аватара пользователя. Объявляется классс PopupWithForm
-с колбеком сабмита формы. При вызове сабмита будет сделан запрос к серверу на редактирование аватара. В вёрстку
-запишется ссылка на аватар из данных с сервера */
 const editAvatar = new PopupWithForm(popupEditAvatar, formEditAvatar, {
   submitForm: (inputsValues) => {
     setLoading(true, formEditAvatar)
     api.editAvatar(inputsValues)
       .then(userData => {
-        profileAvatar.src = userData.avatar;
+        console.log(userData);
+        //profileAvatar.src = userData.avatar;
+        getUserInfo.setAvatar(userData)
         editAvatar.close();
       })
       .catch(err => {
         console.log(err)
-      });
+      })
+      .finally(() => {
+        setLoading(false, formEditAvatar, 'Сохранить');
+      })
   }
 })
 
 
-/* Функция создания карточки (для дефолтных и для пользовательских). Функция создаёт экземпляр класса Card
-и возвращает полностью готовый для работы 
-+ в каждом экземпляре есть колбеки на просмотр картинки, лайк и удаление. 
-+ для удаления вызывается колбек, в котором вызывается метод setSubmitAction. В нем форме назначается сабмит,
-в котором делается запрос к серверу на удаление карточки. Карточка удаляется методом removeCard */
 const createCard = (cardInfo) => {
   const card = new Card(cardInfo, {
     handleCardClick: () => {
@@ -126,11 +116,14 @@ const createCard = (cardInfo) => {
           .then(() => {
             card.removeCard();
             deleteCard.close();
-            setLoading(false, formDeleteCard, 'Да')
+            //setLoading(false, formDeleteCard, 'Да')
           })
           .catch(err => {
             console.log(err)
-          });
+          })
+          .finally(() => {
+            setLoading(false, formDeleteCard, 'Да')
+          })
       })
       deleteCard.open();
     }
@@ -140,10 +133,6 @@ const createCard = (cardInfo) => {
 }
 
 
-/* Экземпляр класса для дефолтных карточек. Класс Section получает массив с дефолтными карточками.
-В колбеке renderer вызывается функция createCard с параметром данных карточек с сервера.
-В элемент карточки вставляются значения методом generateCard().
-Методом addItem() класса Section готовая карточка вставляется на страницу */
 api.getCards()
   .then(cardsData => {
     const getDeafaultCards = new Section({
@@ -154,7 +143,6 @@ api.getCards()
         getDeafaultCards.addItem(cardElement);
       }
     }, cardContainer)
-    /* Вызывается колбек класса Section, чтобы отработало всё, что описано выше. */
     getDeafaultCards.renderItems();
   })
   .catch(err => {
@@ -162,10 +150,6 @@ api.getCards()
   });
 
 
-/* Экземпляр класса для создания новых карточек. Объявляется класс PopupWithForm с колбеком сабмита формы.
-В нем отправляется запрос к серверу на создание новой карточки с параметром данных из инпута попапа. В запросе
-вызывается функция createCard с параметром данных карточек из запроса. В элемент карточки вставляются значения
-методом generateCard(). Методом prepend карточка вставляется на страницу */
 const addCard = new PopupWithForm(popupAddCard, formAddCard, {
   submitForm: (inputsValues) => {
     setLoading(true, formAddCard)
@@ -178,12 +162,14 @@ const addCard = new PopupWithForm(popupAddCard, formAddCard, {
       })
       .catch(err => {
         console.log(err)
-      });
+      })
+      .finally(() => {
+        setLoading(false, formAddCard, 'Создать')
+      })
   }
 })
 
 
-/* Функция установки "загрузки" при отправки данных на сервер */
 function setLoading(isLoading, form, buttonText) {
   const formButton = form.querySelector('.form__button');
   if (isLoading) {
@@ -209,13 +195,13 @@ buttonUserInfo.addEventListener('click', () => {
   getUserInfo.getUserInfo();
   userInfoValidation.removeErrors();
   userInfoValidation.enableSubmitButton();
-  setLoading(false, formUserInfo, 'Сохранить')
+  //setLoading(false, formUserInfo, 'Сохранить')
 });
 
 buttonAddCard.addEventListener('click', () => {
   addCardPopup.open()
   cardValidator.disableSubmitButton();
-  setLoading(false, formAddCard, 'Создать')
+  //setLoading(false, formAddCard, 'Создать')
 })
 
 buttonEditAvatar.addEventListener('click', () => {
@@ -223,8 +209,7 @@ buttonEditAvatar.addEventListener('click', () => {
   avatarValidator.removeErrors();
   avatarValidator.enableSubmitButton();
   getUserInfo.getUserInfo();
-  setLoading(false, formEditAvatar, 'Сохранить')
-
+  //setLoading(false, formEditAvatar, 'Сохранить')
 })
 
 

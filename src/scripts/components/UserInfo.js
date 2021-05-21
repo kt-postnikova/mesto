@@ -19,4 +19,8 @@ export default class UserInfo {
         this.userNameSelector.textContent = inputsValues.name;
         this.userAboutSelector.textContent = inputsValues.about;
     }
+
+    setAvatar(userData) {
+        this.avatarSelector.src = userData.avatar
+    }
 }
