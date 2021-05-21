@@ -22,7 +22,7 @@ export default class Api {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
-                name: inputValues.name,
+                name: inputValues.title,
                 link: inputValues.link
             })
         })

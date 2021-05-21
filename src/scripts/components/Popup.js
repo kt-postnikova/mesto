@@ -1,4 +1,4 @@
-import { ESC_KEYCODE } from '../utils/constants.js';
+import { escKeycode } from '../utils/constants.js';
 
 export default class Popup {
     constructor(popupSelector) {
@@ -17,7 +17,7 @@ export default class Popup {
 
     _handleEcsClose() {
         document.addEventListener('keydown', evt => {
-            if (evt.key === ESC_KEYCODE) {
+            if (evt.key === escKeycode) {
                 this.close();
             }
         })

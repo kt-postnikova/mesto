@@ -1,4 +1,4 @@
-import { POPUP_CAPTION, POPUP_IMAGE } from "../utils/constants.js";
+import { popupCaption, popupImage } from "../utils/constants.js";
 import Popup from "./Popup.js";
 
 export default class PopupWithImage extends Popup {
@@ -8,7 +8,7 @@ export default class PopupWithImage extends Popup {
 
     open(cardData) {
         super.open();
-        POPUP_IMAGE.src = cardData.link;
-        POPUP_CAPTION.textContent = cardData.name;
+        popupImage.src = cardData.link;
+        popupCaption.textContent = cardData.name;
     }
 }

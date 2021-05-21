@@ -1,4 +1,4 @@
-import { INPUT_NAME, INPUT_ABOUT, INPUT_AVATAR } from '../utils/constants.js';
+import { inputName, inputAbout, inputAvatar } from '../utils/constants.js';
 
 export default class UserInfo {
     constructor(userNameSelector, userAboutSelector, avatarSelector) {
@@ -9,9 +9,9 @@ export default class UserInfo {
 
     // вствить данные в инпуты
     getUserInfo() {
-        INPUT_NAME.value = this.userNameSelector.textContent;
-        INPUT_ABOUT.value = this.userAboutSelector.textContent;
-        INPUT_AVATAR.value = this.avatarSelector.src
+        inputName.value = this.userNameSelector.textContent;
+        inputAbout.value = this.userAboutSelector.textContent;
+        inputAvatar.value = this.avatarSelector.src
     }
 
     // добавление данных на страницу
