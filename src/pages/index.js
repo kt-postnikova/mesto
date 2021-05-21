@@ -23,6 +23,8 @@ import {
   formAddCard,
   formDeleteCard,
   formEditAvatar,
+  inputName,
+  inputAbout,
   validation,
 } from '../scripts/utils/constants.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
@@ -42,7 +44,7 @@ const api = new Api({
 const userInfo = new Popup(popupUserInfo);
 const addCardPopup = new Popup(popupAddCard);
 const showImage = new PopupWithImage(popupShowImage);
-const getUserInfo = new UserInfo(profileName, profileAbout, profileAvatar);
+const getUserInfo = new UserInfo(profileName, profileAbout, profileAvatar, inputName, inputAbout);
 const deleteCard = new PopupWithSubmit(popupDeleteCard, formDeleteCard);
 const userInfoValidation = new FormValidator(validation, formUserInfo);
 const cardValidator = new FormValidator(validation, formAddCard);
@@ -133,10 +135,37 @@ function createCard(cardInfo) {
 }
 
 
-api.getCards()
-  .then(cardsData => {
+// api.getCards()
+//   .then(cardsData => {
+//     const getDeafaultCards = new Section({
+//       items: cardsData,
+//       renderer: (cardInfo) => {
+//         const defaultCards = createCard(cardInfo);
+//         const cardElement = defaultCards.generateCard();
+//         getDeafaultCards.addItem(cardElement);
+//       }
+//     }, cardContainer)
+//     getDeafaultCards.renderItems();
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   });
+
+
+function renderCard(cardInfo) {
+  const renderingCard = new Section({
+    items: cardInfo,
+    renderer: (cardInfo) => {
+      const card = createCard(cardInfo);
+      const cardElement = card.generateCard();
+    }
+  })
+}
+
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([userInfo, cardData]) => {
     const getDeafaultCards = new Section({
-      items: cardsData,
+      items: cardData,
       renderer: (cardInfo) => {
         const defaultCards = createCard(cardInfo);
         const cardElement = defaultCards.generateCard();
@@ -147,7 +176,8 @@ api.getCards()
   })
   .catch(err => {
     console.log(err)
-  });
+  })
+
 
 
 const addCard = new PopupWithForm(popupAddCard, formAddCard, {
