@@ -32,8 +32,6 @@ export const inputTitle = formAddCard.querySelector('.form__input_type_title');
 export const inputLink = formAddCard.querySelector('.form__input_type_link');
 export const inputAvatar = formEditAvatar.querySelector('.form__input_type_avatar');
 
-export const escKeycode = 'Escape';
-
 export const validation = {
     formSelector: '.form',
     inputSelector: '.form__input',
