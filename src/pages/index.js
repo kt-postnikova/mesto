@@ -101,7 +101,7 @@ const editAvatar = new PopupWithForm(popupEditAvatar, formEditAvatar, {
 })
 
 
-const createCard = (cardInfo) => {
+function createCard(cardInfo) {
   const card = new Card(cardInfo, {
     handleCardClick: () => {
       showImage.open(cardInfo);
