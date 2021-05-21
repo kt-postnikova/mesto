@@ -152,27 +152,46 @@ function createCard(cardInfo) {
 //   });
 
 
-function renderCard(cardInfo) {
+function renderDefaultCards(cardInfo) {
   const renderingCard = new Section({
     items: cardInfo,
     renderer: (cardInfo) => {
       const card = createCard(cardInfo);
       const cardElement = card.generateCard();
+      renderingCard.addDefaultCards(cardElement);
     }
-  })
+  }, cardContainer)
+
+  return renderingCard
 }
+
+function renderNewCard(cardInfo) {
+  const renderingCard = new Section({
+    items: cardInfo,
+    renderer: (cardInfo) => {
+      const card = createCard(cardInfo);
+      const cardElement = card.generateCard();
+      renderingCard.addNewCard(cardElement);
+    }
+  }, cardContainer)
+
+  return renderingCard
+}
+
 
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cardData]) => {
-    const getDeafaultCards = new Section({
-      items: cardData,
-      renderer: (cardInfo) => {
-        const defaultCards = createCard(cardInfo);
-        const cardElement = defaultCards.generateCard();
-        getDeafaultCards.addItem(cardElement);
-      }
-    }, cardContainer)
-    getDeafaultCards.renderItems();
+    // const getDeafaultCards = new Section({
+    //   items: cardData,
+    //   renderer: (cardInfo) => {
+    //     const defaultCards = createCard(cardInfo);
+    //     const cardElement = defaultCards.generateCard();
+    //     getDeafaultCards.addItem(cardElement);
+    //   }
+    // }, cardContainer)
+
+    const defaultCards = renderDefaultCards(cardData);
+    defaultCards.renderItems();
   })
   .catch(err => {
     console.log(err)
@@ -185,9 +204,16 @@ const addCard = new PopupWithForm(popupAddCard, formAddCard, {
     setLoading(true, formAddCard)
     api.createCard(inputsValues)
       .then(cardData => {
-        const newCard = createCard(cardData);
-        const cardElement = newCard.generateCard();
-        document.querySelector(cardContainer).prepend(cardElement);
+
+        // const newCard = createCard(cardData);
+        // const cardElement = newCard.generateCard();
+        // document.querySelector(cardContainer).prepend(cardElement);
+        const cardArray = [];
+        cardArray[0] = cardData;
+
+
+        const newCard = renderNewCard(cardArray);
+        newCard.renderItems();
         addCard.close();
       })
       .catch(err => {
