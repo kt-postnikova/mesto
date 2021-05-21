@@ -1,22 +1,28 @@
-import { INPUT_NAME, INPUT_ABOUT, INPUT_AVATAR } from '../utils/constants.js';
-
 export default class UserInfo {
-    constructor(userNameSelector, userAboutSelector, avatarSelector) {
+    constructor(userNameSelector, userAboutSelector, avatarSelector, inputName, inputAbout, inputAvatar) {
         this.userNameSelector = userNameSelector;
         this.userAboutSelector = userAboutSelector;
         this.avatarSelector = avatarSelector;
+        this.inputName = inputName;
+        this.inputAbout = inputAbout;
+        this.inputAvatar = inputAvatar;
     }
 
-    // вствить данные в инпуты
     getUserInfo() {
-        INPUT_NAME.value = this.userNameSelector.textContent;
-        INPUT_ABOUT.value = this.userAboutSelector.textContent;
-        INPUT_AVATAR.value = this.avatarSelector.src
+        this.inputName.value = this.userNameSelector.textContent;
+        this.inputAbout.value = this.userAboutSelector.textContent;
     }
 
-    // добавление данных на страницу
     setUserInfo(inputsValues) {
         this.userNameSelector.textContent = inputsValues.name;
         this.userAboutSelector.textContent = inputsValues.about;
+    }
+
+    getAvatar() {
+        this.inputAvatar.value = this.avatarSelector.src
+    }
+
+    setAvatar(userData) {
+        this.avatarSelector.src = userData.avatar
     }
 }

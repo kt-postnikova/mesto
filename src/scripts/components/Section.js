@@ -11,7 +11,11 @@ export default class Section {
         });
     }
 
-    addItem(element) {
+    addDefaultCards(element) {
         this.containerSelector.append(element);
+    }
+
+    addNewCard(element) {
+        this.containerSelector.prepend(element);
     }
 }
