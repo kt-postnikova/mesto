@@ -69,7 +69,6 @@ const editUserInfo = new PopupWithForm(popupUserInfo, formUserInfo, {
     setLoading(true, formUserInfo);
     api.editUserInfo(inputsValues)
       .then(() => {
-        //const userInfo = new UserInfo(profileName, profileAbout);
         getUserInfo.setUserInfo(inputsValues);
         editUserInfo.close();
       })
@@ -89,7 +88,6 @@ const editAvatar = new PopupWithForm(popupEditAvatar, formEditAvatar, {
     api.editAvatar(inputsValues)
       .then(userData => {
         console.log(userData);
-        //profileAvatar.src = userData.avatar;
         getUserInfo.setAvatar(userData)
         editAvatar.close();
       })
@@ -118,7 +116,6 @@ function createCard(cardInfo) {
           .then(() => {
             card.removeCard();
             deleteCard.close();
-            //setLoading(false, formDeleteCard, 'Да')
           })
           .catch(err => {
             console.log(err)
@@ -133,23 +130,6 @@ function createCard(cardInfo) {
 
   return card;
 }
-
-
-// api.getCards()
-//   .then(cardsData => {
-//     const getDeafaultCards = new Section({
-//       items: cardsData,
-//       renderer: (cardInfo) => {
-//         const defaultCards = createCard(cardInfo);
-//         const cardElement = defaultCards.generateCard();
-//         getDeafaultCards.addItem(cardElement);
-//       }
-//     }, cardContainer)
-//     getDeafaultCards.renderItems();
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   });
 
 
 function renderDefaultCards(cardInfo) {
@@ -181,15 +161,6 @@ function renderNewCard(cardInfo) {
 
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cardData]) => {
-    // const getDeafaultCards = new Section({
-    //   items: cardData,
-    //   renderer: (cardInfo) => {
-    //     const defaultCards = createCard(cardInfo);
-    //     const cardElement = defaultCards.generateCard();
-    //     getDeafaultCards.addItem(cardElement);
-    //   }
-    // }, cardContainer)
-
     const defaultCards = renderDefaultCards(cardData);
     defaultCards.renderItems();
   })
@@ -204,13 +175,8 @@ const addCard = new PopupWithForm(popupAddCard, formAddCard, {
     setLoading(true, formAddCard)
     api.createCard(inputsValues)
       .then(cardData => {
-
-        // const newCard = createCard(cardData);
-        // const cardElement = newCard.generateCard();
-        // document.querySelector(cardContainer).prepend(cardElement);
         const cardArray = [];
         cardArray[0] = cardData;
-
 
         const newCard = renderNewCard(cardArray);
         newCard.renderItems();
@@ -236,7 +202,6 @@ function setLoading(isLoading, form, buttonText) {
 }
 
 
-
 const formList = Array.from(document.querySelectorAll(validation.formSelector));
 
 formList.forEach(form => {
@@ -245,19 +210,16 @@ formList.forEach(form => {
 })
 
 
-
 buttonUserInfo.addEventListener('click', () => {
   userInfo.open();
   getUserInfo.getUserInfo();
   userInfoValidation.removeErrors();
   userInfoValidation.enableSubmitButton();
-  //setLoading(false, formUserInfo, 'Сохранить')
 });
 
 buttonAddCard.addEventListener('click', () => {
   addCardPopup.open()
   cardValidator.disableSubmitButton();
-  //setLoading(false, formAddCard, 'Создать')
 })
 
 buttonEditAvatar.addEventListener('click', () => {
@@ -265,7 +227,6 @@ buttonEditAvatar.addEventListener('click', () => {
   avatarValidator.removeErrors();
   avatarValidator.enableSubmitButton();
   getUserInfo.getUserInfo();
-  //setLoading(false, formEditAvatar, 'Сохранить')
 })
 
 

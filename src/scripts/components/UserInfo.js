@@ -7,14 +7,11 @@ export default class UserInfo {
         this.inputAbout = inputAbout
     }
 
-    // вствить данные в инпуты
     getUserInfo() {
         this.inputName.value = this.userNameSelector.textContent;
         this.inputAbout.value = this.userAboutSelector.textContent;
-        // inputAvatar.value = this.avatarSelector.src
     }
 
-    // добавление данных на страницу
     setUserInfo(inputsValues) {
         this.userNameSelector.textContent = inputsValues.name;
         this.userAboutSelector.textContent = inputsValues.about;
