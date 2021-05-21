@@ -25,6 +25,7 @@ import {
   formEditAvatar,
   inputName,
   inputAbout,
+  inputAvatar,
   validation,
 } from '../scripts/utils/constants.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
@@ -44,7 +45,7 @@ const api = new Api({
 const userInfo = new Popup(popupUserInfo);
 const addCardPopup = new Popup(popupAddCard);
 const showImage = new PopupWithImage(popupShowImage);
-const getUserInfo = new UserInfo(profileName, profileAbout, profileAvatar, inputName, inputAbout);
+const getUserInfo = new UserInfo(profileName, profileAbout, profileAvatar, inputName, inputAbout, inputAvatar);
 const deleteCard = new PopupWithSubmit(popupDeleteCard, formDeleteCard);
 const userInfoValidation = new FormValidator(validation, formUserInfo);
 const cardValidator = new FormValidator(validation, formAddCard);
@@ -226,7 +227,7 @@ buttonEditAvatar.addEventListener('click', () => {
   editAvatar.open();
   avatarValidator.removeErrors();
   avatarValidator.enableSubmitButton();
-  getUserInfo.getUserInfo();
+  getUserInfo.getAvatar();
 })
 
 
