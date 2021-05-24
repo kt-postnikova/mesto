@@ -54,15 +54,6 @@ const avatarValidator = new FormValidator(validation, formEditAvatar)
 let userData;
 
 
-api.getUserInfo()
-  .then(userInfo => {
-    getUserInfo.setUserInfo(userInfo);
-    getUserInfo.setAvatar(userInfo);
-    userData = userInfo._id
-  })
-  .catch(err => {
-    console.log(err)
-  });
 
 
 const editUserInfo = new PopupWithForm(popupUserInfo, formUserInfo, {
@@ -129,46 +120,33 @@ function createCard(cardInfo) {
     }
   }, cardTemplate, userData, api)
 
-  return card;
+  return card.generateCard();
 }
 
 
-function renderDefaultCards(cardInfo) {
+function renderCard(isNewCard) {
   const renderingCard = new Section({
-    items: cardInfo,
     renderer: (cardInfo) => {
-      const card = createCard(cardInfo);
-      const cardElement = card.generateCard();
-      renderingCard.addDefaultCards(cardElement);
+      const cardElement = createCard(cardInfo);
+      renderingCard.addItem(isNewCard, cardElement);
     }
   }, cardContainer)
 
   return renderingCard
 }
-
-function renderNewCard(cardInfo) {
-  const renderingCard = new Section({
-    items: cardInfo,
-    renderer: (cardInfo) => {
-      const card = createCard(cardInfo);
-      const cardElement = card.generateCard();
-      renderingCard.addNewCard(cardElement);
-    }
-  }, cardContainer)
-
-  return renderingCard
-}
-
 
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cardData]) => {
-    const defaultCards = renderDefaultCards(cardData);
-    defaultCards.renderItems();
+    getUserInfo.setUserInfo(userInfo);
+    getUserInfo.setAvatar(userInfo);
+    userData = userInfo._id;
+
+    const defaultCards = renderCard(false);
+    defaultCards.renderItems(cardData);
   })
   .catch(err => {
     console.log(err)
   })
-
 
 
 const addCard = new PopupWithForm(popupAddCard, formAddCard, {
@@ -179,8 +157,8 @@ const addCard = new PopupWithForm(popupAddCard, formAddCard, {
         const cardArray = [];
         cardArray[0] = cardData;
 
-        const newCard = renderNewCard(cardArray);
-        newCard.renderItems();
+        const newCard = renderCard(true);
+        newCard.renderItems(cardArray);
         addCard.close();
       })
       .catch(err => {
@@ -213,7 +191,8 @@ formList.forEach(form => {
 
 buttonUserInfo.addEventListener('click', () => {
   userInfo.open();
-  getUserInfo.getUserInfo();
+  inputName.value = getUserInfo.getUserInfo().name;
+  inputAbout.value = getUserInfo.getUserInfo().about;
   userInfoValidation.removeErrors();
   userInfoValidation.enableSubmitButton();
 });
@@ -227,7 +206,6 @@ buttonEditAvatar.addEventListener('click', () => {
   editAvatar.open();
   avatarValidator.removeErrors();
   avatarValidator.enableSubmitButton();
-  getUserInfo.getAvatar();
 })
 
 
