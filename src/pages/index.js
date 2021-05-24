@@ -54,15 +54,6 @@ const avatarValidator = new FormValidator(validation, formEditAvatar)
 let userData;
 
 
-api.getUserInfo()
-  .then(userInfo => {
-    getUserInfo.setUserInfo(userInfo);
-    getUserInfo.setAvatar(userInfo);
-    userData = userInfo._id
-  })
-  .catch(err => {
-    console.log(err)
-  });
 
 
 const editUserInfo = new PopupWithForm(popupUserInfo, formUserInfo, {
@@ -129,7 +120,7 @@ function createCard(cardInfo) {
     }
   }, cardTemplate, userData, api)
 
-  return card;
+  return card.generateCard();
 }
 
 
@@ -137,8 +128,7 @@ function renderDefaultCards(cardInfo) {
   const renderingCard = new Section({
     items: cardInfo,
     renderer: (cardInfo) => {
-      const card = createCard(cardInfo);
-      const cardElement = card.generateCard();
+      const cardElement = createCard(cardInfo);
       renderingCard.addDefaultCards(cardElement);
     }
   }, cardContainer)
@@ -150,8 +140,7 @@ function renderNewCard(cardInfo) {
   const renderingCard = new Section({
     items: cardInfo,
     renderer: (cardInfo) => {
-      const card = createCard(cardInfo);
-      const cardElement = card.generateCard();
+      const cardElement = createCard(cardInfo);
       renderingCard.addNewCard(cardElement);
     }
   }, cardContainer)
@@ -162,6 +151,9 @@ function renderNewCard(cardInfo) {
 
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cardData]) => {
+    getUserInfo.setUserInfo(userInfo);
+    getUserInfo.setAvatar(userInfo);
+    userData = userInfo._id
     const defaultCards = renderDefaultCards(cardData);
     defaultCards.renderItems();
   })
@@ -169,6 +161,15 @@ Promise.all([api.getUserInfo(), api.getCards()])
     console.log(err)
   })
 
+// api.getUserInfo()
+//   .then(userInfo => {
+//     getUserInfo.setUserInfo(userInfo);
+//     getUserInfo.setAvatar(userInfo);
+//     userData = userInfo._id
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   });
 
 
 const addCard = new PopupWithForm(popupAddCard, formAddCard, {
