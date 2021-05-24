@@ -9,8 +9,6 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        // this.inputName.value = this.userNameSelector.textContent;
-        // this.inputAbout.value = this.userAboutSelector.textContent;
         return {
             name: this.userNameSelector.textContent,
             about: this.userAboutSelector.textContent

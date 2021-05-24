@@ -11,14 +11,6 @@ export default class Section {
         });
     }
 
-    // addDefaultCards(element) {
-    //     this.containerSelector.append(element);
-    // }
-
-    // addNewCard(element) {
-    //     this.containerSelector.prepend(element);
-    // }
-
     addItem(isNewCard, element) {
         if (isNewCard) {
             this.containerSelector.prepend(element);

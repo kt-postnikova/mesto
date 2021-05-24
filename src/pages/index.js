@@ -135,54 +135,18 @@ function renderCard(isNewCard) {
   return renderingCard
 }
 
-
-// function renderDefaultCards(cardInfo) {
-//   const renderingCard = new Section({
-//     items: cardInfo,
-//     renderer: (cardInfo) => {
-//       const cardElement = createCard(cardInfo);
-//       renderingCard.addDefaultCards(cardElement);
-//     }
-//   }, cardContainer)
-
-//   return renderingCard
-// }
-
-// function renderNewCard(cardInfo) {
-//   const renderingCard = new Section({
-//     items: cardInfo,
-//     renderer: (cardInfo) => {
-//       const cardElement = createCard(cardInfo);
-//       renderingCard.addNewCard(cardElement);
-//     }
-//   }, cardContainer)
-
-//   return renderingCard
-// }
-
-
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([userInfo, cardData]) => {
     getUserInfo.setUserInfo(userInfo);
     getUserInfo.setAvatar(userInfo);
-    userData = userInfo._id
-    //const defaultCards = renderingCard.renderItems(cardData);
+    userData = userInfo._id;
+
     const defaultCards = renderCard(false);
     defaultCards.renderItems(cardData);
   })
   .catch(err => {
     console.log(err)
   })
-
-// api.getUserInfo()
-//   .then(userInfo => {
-//     getUserInfo.setUserInfo(userInfo);
-//     getUserInfo.setAvatar(userInfo);
-//     userData = userInfo._id
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   });
 
 
 const addCard = new PopupWithForm(popupAddCard, formAddCard, {
@@ -193,10 +157,8 @@ const addCard = new PopupWithForm(popupAddCard, formAddCard, {
         const cardArray = [];
         cardArray[0] = cardData;
 
-        //const newCard = renderNewCard(cardArray);
         const newCard = renderCard(true);
-        newCard.renderItems(cardArray)
-        //newCard.renderItems();
+        newCard.renderItems(cardArray);
         addCard.close();
       })
       .catch(err => {
