@@ -9,17 +9,17 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        this.inputName.value = this.userNameSelector.textContent;
-        this.inputAbout.value = this.userAboutSelector.textContent;
+        // this.inputName.value = this.userNameSelector.textContent;
+        // this.inputAbout.value = this.userAboutSelector.textContent;
+        return {
+            name: this.userNameSelector.textContent,
+            about: this.userAboutSelector.textContent
+        }
     }
 
     setUserInfo(inputsValues) {
         this.userNameSelector.textContent = inputsValues.name;
         this.userAboutSelector.textContent = inputsValues.about;
-    }
-
-    getAvatar() {
-        this.inputAvatar.value = this.avatarSelector.src
     }
 
     setAvatar(userData) {

@@ -214,7 +214,8 @@ formList.forEach(form => {
 
 buttonUserInfo.addEventListener('click', () => {
   userInfo.open();
-  getUserInfo.getUserInfo();
+  inputName.value = getUserInfo.getUserInfo().name;
+  inputAbout.value = getUserInfo.getUserInfo().about;
   userInfoValidation.removeErrors();
   userInfoValidation.enableSubmitButton();
 });
@@ -228,7 +229,6 @@ buttonEditAvatar.addEventListener('click', () => {
   editAvatar.open();
   avatarValidator.removeErrors();
   avatarValidator.enableSubmitButton();
-  getUserInfo.getAvatar();
 })
 
 
