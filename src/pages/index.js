@@ -124,29 +124,41 @@ function createCard(cardInfo) {
 }
 
 
-function renderDefaultCards(cardInfo) {
+function renderCard(isNewCard) {
   const renderingCard = new Section({
-    items: cardInfo,
     renderer: (cardInfo) => {
       const cardElement = createCard(cardInfo);
-      renderingCard.addDefaultCards(cardElement);
+      renderingCard.addItem(isNewCard, cardElement);
     }
   }, cardContainer)
 
   return renderingCard
 }
 
-function renderNewCard(cardInfo) {
-  const renderingCard = new Section({
-    items: cardInfo,
-    renderer: (cardInfo) => {
-      const cardElement = createCard(cardInfo);
-      renderingCard.addNewCard(cardElement);
-    }
-  }, cardContainer)
 
-  return renderingCard
-}
+// function renderDefaultCards(cardInfo) {
+//   const renderingCard = new Section({
+//     items: cardInfo,
+//     renderer: (cardInfo) => {
+//       const cardElement = createCard(cardInfo);
+//       renderingCard.addDefaultCards(cardElement);
+//     }
+//   }, cardContainer)
+
+//   return renderingCard
+// }
+
+// function renderNewCard(cardInfo) {
+//   const renderingCard = new Section({
+//     items: cardInfo,
+//     renderer: (cardInfo) => {
+//       const cardElement = createCard(cardInfo);
+//       renderingCard.addNewCard(cardElement);
+//     }
+//   }, cardContainer)
+
+//   return renderingCard
+// }
 
 
 Promise.all([api.getUserInfo(), api.getCards()])
@@ -154,8 +166,9 @@ Promise.all([api.getUserInfo(), api.getCards()])
     getUserInfo.setUserInfo(userInfo);
     getUserInfo.setAvatar(userInfo);
     userData = userInfo._id
-    const defaultCards = renderDefaultCards(cardData);
-    defaultCards.renderItems();
+    //const defaultCards = renderingCard.renderItems(cardData);
+    const defaultCards = renderCard(false);
+    defaultCards.renderItems(cardData);
   })
   .catch(err => {
     console.log(err)
@@ -180,8 +193,10 @@ const addCard = new PopupWithForm(popupAddCard, formAddCard, {
         const cardArray = [];
         cardArray[0] = cardData;
 
-        const newCard = renderNewCard(cardArray);
-        newCard.renderItems();
+        //const newCard = renderNewCard(cardArray);
+        const newCard = renderCard(true);
+        newCard.renderItems(cardArray)
+        //newCard.renderItems();
         addCard.close();
       })
       .catch(err => {
