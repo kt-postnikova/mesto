@@ -79,7 +79,6 @@ const editAvatar = new PopupWithForm(popupEditAvatar, formEditAvatar, {
     setLoading(true, formEditAvatar)
     api.editAvatar(inputsValues)
       .then(userData => {
-        console.log(userData);
         getUserInfo.setAvatar(userData)
         editAvatar.close();
       })
@@ -205,7 +204,7 @@ buttonAddCard.addEventListener('click', () => {
 buttonEditAvatar.addEventListener('click', () => {
   editAvatar.open();
   avatarValidator.removeErrors();
-  avatarValidator.enableSubmitButton();
+  avatarValidator.disableSubmitButton();
 })
 
 
